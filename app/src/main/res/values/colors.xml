@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Standard Utility Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="menu_white">#FFFFFFFF</color>
+
+    <!-- Custom Colors used in Layouts/Code -->
+    <color name="green">#16A34A</color>
+    <color name="red">#DC2626</color>
+    <color name="error_red">#FFF44336</color>
+    <color name="striped_row_background">#D9EBF6</color>
+    <color name="primary_blue">#FF1976D2</color>
+    <color name="login_color">#3BA662</color>
+    <color name="accent_orange">#FFFF5722</color>
+    <color name="accent_orange_light">#FFFF8A65</color>
+    <color name="text_hint">#FFBDBDBD</color>
+    <color name="bg_light">#F6F6F6</color>
+    <color name="primary">#1E88E5</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="text_on_dark">#111111</color>
+    <color name="cl_agreement">#FFFF5722</color>
+    <color name="primaryDark">#FF3700B3</color>
+    <color name="textPrimary">#FF000000</color>
+    <color name="borderLight">#FFEEEEEE</color>
+
+    <!-- Chart Colors -->
+    <color name="chart_color_1">#FF5722</color>
+    <color name="chart_color_2">#10B981</color>
+    <color name="chart_color_3">#3B82F6</color>
+    <color name="chart_color_4">#FFC107</color>
+    <color name="chart_color_5">#8B5CF6</color>
+    <color name="chart_color_6">#EC4899</color>
+    <color name="chart_color_7">#14B8A6</color>
+    <color name="chart_color_8">#F97316</color>
+
+    <!-- Premium Colors -->
+    <color name="premium_gold">#FFD700</color>
+    <color name="premium_gold_dark">#FFA500</color>
+
+    <!-- Snackbar Colors -->
+    <color name="snackbar_error_background">#66F44336</color>
+    <color name="snackbar_error_text">#FFFFFF</color>
+    <color name="snackbar_error_action">#FFEB3B</color>
+    <color name="snackbar_info_background">#662196F3</color>
+    <color name="snackbar_info_text">#FFFFFF</color>
+    <color name="snackbar_info_action">#FFEB3B</color>
+    <color name="snackbar_success_background">#6626BF2C</color>
+    <color name="snackbar_success_text">#FFFFFF</color>
+    <color name="snackbar_success_action">#FFEB3B</color>
+    <color name="snackbar_default_background">#661D1818</color>
+    <color name="snackbar_default_text">#FFFFFF</color>
+    <color name="snackbar_default_action">#FFEB3B</color>
+    <!-- Text Colors -->
+    <color name="text_primary">#2C3E50</color>
+    <color name="text_language">#FF000000</color>
+    <color name="text_secondary">#7F8C8D</color>
+    <color name="text_tertiary">#BDC3C7</color>
+
+    <!-- Status Colors -->
+    <color name="success_color">#27AE60</color>
+    <color name="success_light">#E8F8F5</color>
+    <color name="success_dark">#229954</color>
+
+    <color name="error_color">#E74C3C</color>
+    <color name="error_light">#FADBD8</color>
+    <color name="error_dark">#C0392B</color>
+
+    <color name="warning_color">#F39C12</color>
+    <color name="warning_light">#FEF9E7</color>
+    <color name="warning_dark">#D68910</color>
+
+    <color name="info_color">#3498DB</color>
+    <color name="info_light">#EBF5FB</color>
+    <color name="info_dark">#2980B9</color>
+    <color name="btn_stroke_color_selector">#006492</color>
+    <color name="grey_500">#9E9E9E</color>
+
+    <color name="md_theme_ver">#006492</color>
+    <color name="primaryColor">#6200EE</color>
+
+    >
+    <color name="secondaryColor">#03DAC5</color>
+    <color name="errorColor">#B00020</color>
+    <color name="red_500">#F44336</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="md_theme_primary">#006492</color>
+    <color name="material_on_surface_emphasis_medium">#49454FFF</color>
+
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#C9E6FF</color>
+    <color name="md_theme_onPrimaryContainer">#001E2F</color>
+    <color name="md_theme_secondary">#4F616E</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#D2E5F5</color>
+    <color name="md_theme_onSecondaryContainer">#0B1E29</color>
+    <color name="md_theme_tertiary">#63597C</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#E9DDFF</color>
+    <color name="md_theme_onTertiaryContainer">#1F1635</color>
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#410002</color>
+    <color name="md_theme_background">#F8F9FC</color>
+    <color name="md_theme_onBackground">#191C1E</color>
+    <color name="md_theme_surface">#F8F9FC</color>
+    <color name="md_theme_onSurface">#191C1E</color>
+    <color name="md_theme_surfaceVariant">#DDE3EA</color>
+    <color name="md_theme_onSurfaceVariant">#41484D</color>
+    <color name="md_theme_outline">#71787E</color>
+    <color name="md_theme_shadow">#000000</color>
+    <color name="md_theme_inverseSurface">#2E3133</color>
+    <color name="md_theme_inverseOnSurface">#F0F1F4</color>
+    <color name="md_theme_inversePrimary">#8DCDFF</color>
+
+    <color name="colorOutline">#97919D</color>
+
+    <color name="colorSurfaceVariant">#E7E0EC</color>
+
+    <!-- Navigation Item Colors -->
+    <color name="nav_icon_admin">#FF5722</color>
+    <color name="nav_icon_bill">#3B82F6</color>
+    <color name="nav_icon_reports">#10B981</color>
+    <color name="nav_icon_language">#8B5CF6</color>
+    <color name="nav_icon_profile">#EC4899</color>
+    <color name="nav_icon_currency">#FFC107</color>
+    <color name="nav_icon_accounts">#14B8A6</color>
+    <color name="nav_icon_security">#EF4444</color>
+    <color name="nav_icon_login">#3B82F6</color>
+    <color name="nav_icon_devices">#6366F1</color>
+    <color name="nav_icon_logout">#EF4444</color>
+    <color name="nav_icon_purchase">#FFD700</color>
+    <color name="nav_icon_ad">#FF9800</color>
+    <color name="nav_icon_invite">#EC4899</color>
+    <color name="nav_icon_help">#10B981</color>
+    <color name="nav_icon_support">#3B82F6</color>
+    <color name="nav_icon_backup">#8B5CF6</color>
+    <color name="nav_icon_restore">#14B8A6</color>
+    <color name="nav_icon_update">#FFC107</color>
+    <color name="nav_icon_terms">#6366F1</color>
+    <color name="nav_icon_privacy">#EF4444</color>
+    <color name="nav_icon_exit">#9E9E9E</color>
+    <!-- New Modern Colors -->
+    <color name="modern_background">#F5F7FA</color>
+    <color name="modern_card_bg">#FFFFFF</color>
+    <color name="modern_primary">#006492</color>
+    <color name="modern_primary_dark">#004D73</color>
+    <color name="modern_accent">#FF6B35</color>
+    <color name="modern_green">#10B981</color>
+    <color name="modern_red">#EF4444</color>
+    <color name="modern_orange">#FF5722</color>
+    <color name="modern_purple">#8B5CF6</color>
+    <color name="modern_blue">#3B82F6</color>
+    <color name="modern_teal">#14B8A6</color>
+    <color name="modern_yellow">#FFC107</color>
+    <color name="modern_pink">#EC4899</color>
+    <color name="modern_indigo">#6366F1</color>
+
+
+    <!-- Primary Colors -->
+    <color name="primary_color">#2C3E50</color>
+    <color name="primary_dark">#1A252F</color>
+    <color name="primary_light">#34495E</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_color">#3498DB</color>
+    <color name="accent_dark">#2980B9</color>
+    <color name="accent_light">#5DADE2</color>
+
+    <!-- Background Colors -->
+    <color name="background_primary">#FFFFFF</color>
+    <color name="background_secondary">#F8F9FA</color>
+    <color name="background_tertiary">#E9ECEF</color>
+
+
+    <!-- Navigation Colors -->
+    <color name="nav_background">#FFFFFF</color>
+    <color name="nav_text_color">#2C3E50</color>
+    <color name="nav_text_selected">#3498DB</color>
+    <color name="nav_icon_color">#7F8C8D</color>
+    <color name="nav_icon_selected">#3498DB</color>
+
+    <!-- Premium Colors -->
+    <color name="premium_silver">#C0C0C0</color>
+    <color name="premium_bronze">#CD7F32</color>
+
+    <!-- Utility Colors -->
+    <color name="divider_color">#E1E8ED</color>
+    <color name="shadow_color">#1A000000</color>
+    <color name="overlay_color">#80000000</color>
+
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#667eea</color>
+    <color name="gradient_end">#764ba2</color>
+
+    <!-- Legacy Colors -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <!-- Material Design 3 Colors -->
+    <color name="md_theme_on_background">#1C1B1F</color>
+    <color name="md_theme_on_surface">#1C1B1F</color>
+
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_white"
+        android:title="@string/menu_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:theme="@style/App.SearchView"
+        app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/action_export_pdf"
+        android:icon="@drawable/ic_pdf"
+        android:title="@string/menu_export_pdf"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/action_transfer_funds"
+        android:icon="@drawable/ic_transfer"
+        android:title="@string/transfer_funds_title"
+        app:showAsAction="always|collapseActionView"/>
+    <item
+        android:id="@+id/nav_new_bill"
+        android:icon="@drawable/ic_invoice"
+        android:title="@string/menu_new_bill"
+        app:showAsAction="always|collapseActionView"/>
+
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_more_vert_white"
+        android:title="@string/menu_more"
+        android:visible="false"
+        app:showAsAction="ifRoom">
+        <!-- القائمة الفرعية -->
+
+        <menu>
+            <item
+                android:id="@+id/action_share_pdf"
+                android:title="@string/menu_share_pdf" />
+            <item
+                android:id="@+id/action_print"
+                android:title="@string/menu_print" />
+        </menu>
+    </item>
+</menu>

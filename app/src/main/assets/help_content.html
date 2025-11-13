@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محفظتي الذكية</title>
+    <link rel="icon" href="https://haddadinc.github.io/my-wallet-privacy/app_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* تحسينات Dropdown اللغة */
+        .language-selector {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .language-dropdown {
+            width: 100%;
+            padding: 10px 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 25px; /* أطراف نصف دائرة */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .language-dropdown:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .language-dropdown.active {
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            border-color: #667eea;
+        }
+
+        .dropdown-arrow {
+            transition: transform 0.3s;
+            margin-left: 8px;
+        }
+
+        .dropdown-arrow.rotated {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            right: 0; /* تثبيت على اليمين دائماً */
+            left: auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-bottom-left-radius: 25px; /* أطراف نصف دائرة */
+            border-bottom-right-radius: 25px; /* أطراف نصف دائرة */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            min-width: 180px;
+        }
+
+        .dropdown-options.show {
+            max-height: 250px;
+        }
+
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+            border-radius: 20px; /* أطراف نصف دائرة */
+            margin: 2px 5px;
+        }
+
+        .language-option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .language-option.active {
+            background-color: #e6f0ff;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .flag-icon {
+            width: 20px;
+            height: 15px;
+            margin-left: 10px;
+            border-radius: 2px;
+        }
+
+        .globe-icon {
+            margin-left: 8px;
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        /* بقية الأنماط كما هي */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .app-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 8px;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        .help-section {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .help-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease;
+        }
+
+        .help-header:hover {
+            background: #e9ecef;
+        }
+
+        .help-header.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .help-title {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .help-icon {
+            width: 24px;
+            height: 24px;
+            margin-left: 12px;
+            opacity: 0.8;
+        }
+
+        .expand-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .expand-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        .help-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .help-content.expanded {
+            padding: 20px;
+            max-height: 1000px;
+        }
+
+        .help-content h3 {
+            color: #667eea;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .help-content h4 {
+            color: #667eea;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .help-content ul {
+            padding-right: 20px;
+        }
+
+        .help-content li {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .help-content li2 {
+            color: #F1D0B0;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .feature-highlight {
+            background: #e8f4fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-right: 4px solid #667eea;
+            font-size: 16px;
+        }
+
+        .tip-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-right: 4px solid #ffc107;
+            font-size: 16px;
+        }
+
+        .tip-box strong {
+            color: #856404;
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #e0e0e0;
+            }
+            .help-section {
+                background: #1e1e1e;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            }
+            .help-header {
+                background: #2c2c2c;
+                border-bottom: 1px solid #3a3a3a;
+            }
+            .help-header:hover {
+                background: #3a3a3a;
+            }
+            .help-header.active {
+                background: #5a5a5a;
+                color: white;
+            }
+            .help-content h3 {
+                color: #90caf9;
+            }
+
+            .help-content h4 {
+                color: #90caf9;
+            }
+            .feature-highlight {
+                background: #2a2a2a;
+                border-right: 4px solid #90caf9;
+            }
+            .tip-box {
+                background: #3a3a3a;
+                border-right: 4px solid #ffeb3b;
+            }
+            .tip-box strong {
+                color: #ffeb3b;
+            }
+
+            /* تحسينات الـ Dropdown للوضع الداكن */
+            .language-dropdown {
+                background: #2c2c2c;
+                border-color: #3a3a3a;
+                color: #e0e0e0;
+            }
+
+            .dropdown-options {
+                background: #2c2c2c;
+                border-color: #3a3a3a;
+            }
+
+            .language-option:hover {
+                background-color: #3a3a3a;
+            }
+
+            .language-option.active {
+                background-color: #1a3a5a;
+                color: #90caf9;
+            }
+
+            .globe-icon {
+                color: #90caf9;
+            }
+        }
+
+        /* تحسينات للهواتف والأجهزة ذات الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .header {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .app-icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .help-header {
+                padding: 15px;
+            }
+
+            .help-title {
+                font-size: 16px;
+            }
+
+            .help-icon {
+                width: 20px;
+                height: 20px;
+                margin-left: 8px;
+            }
+
+            .expand-icon {
+                font-size: 18px;
+            }
+
+            .help-content.expanded {
+                padding: 15px;
+            }
+
+            .help-content h3 {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+
+            .help-content h4 {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .help-content ul {
+                padding-right: 15px;
+            }
+
+            .help-content li {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+            .help-content li2 {
+                color: #F1D0B0;
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+            .feature-highlight, .tip-box {
+                padding: 12px;
+                font-size: 14px;
+                margin: 12px 0;
+            }
+
+            .language-selector {
+                max-width: 100%;
+            }
+
+            .dropdown-options {
+                right: 0;
+                left: auto;
+            }
+        }
+
+        /* تحسينات إضافية للشاشات الصغيرة جدًا */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                font-size: 13px;
+            }
+
+            .header {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .help-header {
+                padding: 12px;
+            }
+
+            .help-title {
+                font-size: 15px;
+            }
+
+            .help-content.expanded {
+                padding: 12px;
+            }
+
+            .help-content h3 {
+                font-size: 16px;
+            }
+
+            .help-content h4 {
+                font-size: 15px;
+            }
+
+            .help-content li {
+                font-size: 13px;
+            }
+            .help-content li2 {
+                color: #F1D0B0;
+                font-size: 13px;
+            }
+
+            .feature-highlight, .tip-box {
+                padding: 10px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- استبدال أزرار اللغة بـ Dropdown -->
+<div class="language-selector">
+    <div class="language-dropdown" onclick="toggleDropdown()">
+        <i class="fas fa-globe globe-icon"></i>
+        <span id="selected-language">العربية</span>
+        <span class="dropdown-arrow">▼</span>
+    </div>
+    <div class="dropdown-options" id="language-options">
+        <div class="language-option active" onclick="selectLanguage('ar', 'العربية')">
+            <span>العربية</span>
+            <img src="https://flagcdn.com/w40/ye.png" alt="العربية" class="flag-icon">
+        </div>
+        <div class="language-option" onclick="selectLanguage('en', 'English')">
+            <span>English</span>
+            <img src="https://flagcdn.com/w40/us.png" alt="English" class="flag-icon">
+        </div>
+        <div class="language-option" onclick="selectLanguage('es', 'Español')">
+            <span>Español</span>
+            <img src="https://flagcdn.com/w40/es.png" alt="Español" class="flag-icon">
+        </div>
+        <div class="language-option" onclick="selectLanguage('fr', 'Français')">
+            <span>Français</span>
+            <img src="https://flagcdn.com/w40/fr.png" alt="Français" class="flag-icon">
+        </div>
+    </div>
+</div>
+<div class="header">
+    <h1>
+        <img src="https://haddadinc.github.io/my-wallet-privacy/app_icon.png" alt="أيقونة التطبيق" class="app-icon">
+
+        <span data-translate="app_title">نظرة عامة عن تطبيق محفظتي الذكية</span>
+    </h1>
+
+    <p data-translate="app_description">دليل شامل لاستخدام جميع مميزات التطبيق بسهولة وفعالية</p>
+</div>
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">⭐</span>
+            <span data-translate="features_title">أهم مميزات التطبيق</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="features_overview">نظرة عامة على المميزات للتطبيق</h3>
+        <p data-translate="features_description">تم تصميم التطبيق بكل عناية وحرص ليناسب كل شخص مهتم بتدوين كل حركاتة الماليه سواء له(دائن) او علية(مدين).</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_features">التفاصيل الرئيسية:</strong>
+            <ul>
+                <li><strong data-translate="feature1">أبرز الميزات التي ستغير طريقة إدارتك لحساباتك</strong></li>
+                <li><h4 data-translate="feature2">📌 أهم ميزة للتطبيق بإمكان المستخدم استخدام التطبيق بجهازين لنفس الحساب بحيث اي عملية يتم اضافتها في احد الاجهزة تظهر اوتوماتيكيا بالجهاز الاخر بنفس اللحضة</h4></li>
+                <li data-translate="feature3">✅ سهولة فائقة: واجهة بسيطة وذكية تمكنك من تسجيل أي عملية مالية في ثوانٍ.</li>
+                <li data-translate="feature4">📊 إدارة شاملة للحسابات: أنشئ ملفًا لكل عميل، مورد، أو حساب شخصي وتتبع كل معاملاته بدقة.</li>
+                <li data-translate="feature5">💵 دعم تعدد العملات: أدر حساباتك بعملتك المحلية، وأي عملة أخرى تضيفها بنفسك.</li>
+                <li data-translate="feature6">📄 تقارير PDF احترافية: بضغطة زر، قم بإنشاء كشوفات حساب وتقارير مالية مجمعة أو مفصلة، وشاركها مباشرة مع عملائك عبر مشاركتة بالواتساب او اي تطبيق اخر.</li>
+                <li data-translate="feature7">💻 الربط بالكمبيوتر: قم بربط التطبيق بالابتوب وتصفح التقارير بكل اريحية تأكد بان الهاتف واللابتوب مرتبطان بنفس شبكة wifi.</li>
+                <li data-translate="feature8">☁️ مزامنة سحابية آمنة: لاتحتاج لنسخ إحتياطية فبياناتك في أمان تام! تتم مزامنتها تلقائيًا مع حسابك الخاص في جوجل.</li>
+                <li data-translate="feature9">🔒 أمان وحماية: حافظ على سرية بياناتك المالية عبر قفل التطبيق بكلمة مرور أو ببصمة إصبعك.</li>
+                <li data-translate="feature10">🌐 يعمل بدون إنترنت: لا تقلق بشأن الاتصال. يمكنك تسجيل وتصفح كل عملياتك في أي وقت، وسيتم المزامنة تلقائيًا عند توفر الشبكة.</li>
+                <li data-translate="feature11">🔄 استيراد البيانات: هل لديك بيانات في تطبيقات قديمة أو نسخ احتياطية؟ يمكنك استيرادها بسهولة ومتابعة عملك بدون انقطاع.</li>
+                <li data-translate="feature12">🧾 نظام فواتير متكامل: قم بإنشاء فواتير مبيعات ومشتريات احترافية، وتتبع المبالغ المدفوعة والمتبقية بسهولة.</li>
+            </ul>
+        </div>
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="tip_content">لا تتردد بإستخدام التطبيق فهو يعتمد على أعلى درجات الامان والتشفير الموصى به من جوجل.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">🏠</span>
+            <span data-translate="main_screen_title">الشاشة الرئيسية</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="main_screen_overview">نظرة عامة على الشاشة الرئيسية</h3>
+        <p data-translate="main_screen_description">الشاشة الرئيسية هي لوحة التحكم الرئيسية لتطبيق محفظتي الذكية ، حيث يمكنك إدارة جميع حساباتك المالية وعملياتك. توفر هذه الشاشة نظرة عامة سريعة على حالتك المالية وتتيح لك الوصول السريع إلى الميزات الأساسية.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="component1"><strong>الشريط العلوي :</strong> يحتوي على عنوان تصنيف الحساب، زر القائمة الجانبية (☰)، خيار البحث، وخيار التقارير وخيار الربط بالكمبيوتر.</li>
+                <li data-translate="component2"><strong>قائمة الحسابات:</strong> تعرض جميع حساباتك المالية، مع إجمالي الرصيد لكل حساب.</li>
+                <li data-translate="component3"><strong>الشريط السفلي :</strong> يعرض ملخصاً لإجمالي المبالغ المدينة والدائنة، بالإضافة إلى العملة المحلية المحددة.</li>
+                <li data-translate="component4"><strong>زر الإضافة:</strong> يقع في الشريط السفلي، ويستخدم لإضافة حساب جديد أو عملية مالية جديدة.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="usage1"><strong>التنقل في القائمة الجانبية:</strong> اضغط على أيقونة القائمة (ثلاثة خطوط أفقية ☰) في الزاوية العلوية اليمنى للوصول إلى القائمة الجانبية.</li>
+            <li data-translate="usage2"><strong>البحث عن حساب:</strong> استخدم أيقونة البحث في الشريط العلوي للبحث عن حسابات معينة.</li>
+            <li data-translate="usage3"><strong>عرض التقارير:</strong> للوصول للتقارير، اضغط على أيقونة PDF في الشريط العلوي.</li>
+            <li data-translate="usage4"><strong>إضافة حساب جديد:</strong> اضغط على زر الإضافة (+) في الشريط السفلي.</li>
+            <li data-translate="usage5"><strong>إضافة عملية جديدة:</strong> اضغط على زر الإضافة (+) في الشريط السفلي، ثم اختر "إضافة عملية جديدة".</li>
+            <li data-translate="usage6"><strong>تفاصيل الحساب:</strong> اضغط على أي حساب في القائمة لعرض تفاصيله وعملياته المالية.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="main_screen_tip">يمكنك تخصيص العملة المحلية من خلال إعدادات التطبيق لضمان دقة التقارير المالية.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">👤</span>
+            <span data-translate="personal_data_title">خيار البيانات الشخصية</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="personal_data_overview">نظرة عامة على شاشة البيانات الشخصية</h3>
+        <p data-translate="personal_data_description">تتيح لك هذه الشاشة عرض وتعديل معلومات ملفك الشخصي في تطبيق محفظتي الذكية.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="personal_component1"><strong>الايقونة:</strong> إختر الصورة او الشعار المناسب لك بالضغط على رمز الكاميرا.</li>
+                <li data-translate="personal_component2"><strong>الاسم الكامل:</strong> تسجيل الاسم المناسب.</li>
+                <li data-translate="personal_component3"><strong>اسم الشركة(إختياري):</strong> إدخال اسم الشركة المناسبة.</li>
+                <li data-translate="personal_component4"><strong>العنوان:</strong> إدخال العنوان المناسب.</li>
+                <li data-translate="personal_component5"><strong>رقم الهاتف:</strong> بإمكانك اظافة اكثر من رقم هاتف.</li>
+                <li data-translate="personal_component6"><strong>البريد الإلكتروني:</strong> يتم عرض بريدك الاكتروني اوتوماتيكيا.</li>
+                <li data-translate="personal_component7"><strong>زر الحفظ:</strong> لحفظ البيانات الجديده.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="personal_usage1"><strong>عرض البيانات:</strong> ببساطة افتح هذه الشاشة لعرض معلوماتك والتعديل عليها.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="personal_data_tip">تأكد من تحديث معلوماتك الشخصية بانتظام لضمان دقة البيانات.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">➕</span>
+            <span data-translate="add_operations_title">شاشة إضافة العمليات</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="add_operations_overview">نظرة عامة على شاشة إضافة العمليات</h3>
+        <p data-translate="add_operations_description">تتيح لك هذه الشاشة تسجيل جميع معاملاتك المالية بسهولة وسرعة، سواء كانت إيرادات أو مصروفات.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="operations_component1"><strong>اسم الحساب:</strong> حقل لاختيار الحساب الذي ستتم عليه العملية.</li>
+                <li data-translate="operations_component2"><strong>المبلغ:</strong> حقل لإدخال قيمة العملية.</li>
+                <li data-translate="operations_component3"><strong>التفاصيل:</strong> حقل لإضافة وصف موجز للعملية.</li>
+                <li data-translate="operations_component4"><strong>العملة:</strong> قائمة منسدلة لاختيار العملة المستخدمة في العملية.</li>
+                <li data-translate="operations_component5"><strong>التاريخ:</strong> حقل لاختيار تاريخ العملية.</li>
+                <li data-translate="operations_component6"><strong>زر حفظ نوع العملية:</strong> خيار لتحديد ما إذا كانت العملية إيراداً (لك) أو مصروفاً (عليك).</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="operations_usage1"><strong>اختيار الحساب:</strong> ابدأ بكتابة اسم الحساب، وستظهر لك اقتراحات من حساباتك الموجودة. يمكنك أيضاً إضافة حساب جديد مباشرة من هنا.</li>
+            <li data-translate="operations_usage2"><strong>إدخال المبلغ:</strong> أدخل المبلغ بدقة. يدعم التطبيق الأرقام العشرية.</li>
+            <li data-translate="operations_usage3"><strong>تحديد التفاصيل:</strong> اكتب وصفاً واضحاً للعملية لمساعدتك في تذكرها لاحقاً.</li>
+            <li data-translate="operations_usage4"><strong>اختيار العملة:</strong> اختر العملة المناسبة للعملية من القائمة المنسدلة.</li>
+            <li data-translate="operations_usage5"><strong>تحديد التاريخ:</strong> اضغط على حقل التاريخ لفتح منتقي التاريخ واختيار التاريخ الصحيح للعملية.</li>
+            <li data-translate="operations_usage6"><strong>تحديد النوع:</strong> اختر ما إذا كانت العملية إيراداً أو مصروفاً.</li>
+            <li data-translate="operations_usage7"><strong>حفظ العملية:</strong> بعد إدخال جميع البيانات، اضغط على زر لك أو عليك لإضافة العملية إلى الحساب المحدد.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="operations_tip">يمكنك استخدام حقل التفاصيل لإضافة ملاحظات إضافية حول العملية، مثل اسم المستلم أو الغرض من الدفع.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">💳</span>
+            <span data-translate="account_details_title">شاشة تفاصيل الحساب</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="account_details_overview">نظرة عامة على شاشة تفاصيل الحساب</h3>
+        <p data-translate="account_details_description">تُظهر هذه الشاشة جميع العمليات المالية المتعلقة بحساب معين، مما يمنحك نظرة مفصلة على تدفق الأموال داخل هذا الحساب.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="account_component1"><strong>اسم الحساب والرصيد:</strong> يعرض اسم الحساب وإجمالي رصيده الحالي في الأعلى.</li>
+                <li data-translate="account_component2"><strong>قائمة العمليات:</strong> تعرض جميع الإيرادات والمصروفات المرتبطة بهذا الحساب، مرتبة حسب التاريخ.</li>
+                <li data-translate="account_component3"><strong>تفاصيل العملية:</strong> كل عملية تعرض المبلغ، التاريخ، والوصف.</li>
+                <li data-translate="account_component4"><strong>زر إضافة عملية:</strong> لإنشاء عملية جديدة مباشرة لهذا الحساب.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="account_usage1"><strong>عرض العمليات:</strong> قم بالتمرير لأسفل لعرض جميع العمليات التاريخية للحساب.</li>
+            <li data-translate="account_usage2"><strong>إضافة عملية جديدة:</strong> اضغط على زر الإضافة (+) لإضافة إيراد أو مصروف جديد لهذا الحساب تحديداً.</li>
+            <li data-translate="account_usage3"><strong>تعديل/حذف عملية:</strong> اضغط مطولاً على أي عملية لخيارات التعديل أو الحذف.</li>
+            <li data-translate="account_usage4"><strong>عرض التقرير:</strong> للوصول للتقارير، اضغط على أيقونة PDF في الشريط العلوي سيتم تحديد إسم الحساب والعملة تلقائيًا بناءً على الشاشة الحالية.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="account_tip">يمكنك استخدام هذه الشاشة لمراجعة نفقاتك وإيراداتك الشهرية لحساب معين وتحديد أنماط الإنفاق.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">📋</span>
+            <span data-translate="invoice_title">شاشة فاتورة جديدة</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="invoice_overview">نظرة عامة على شاشة إضافة فاتورة جديدة</h3>
+        <p data-translate="invoice_description">تتيح لك هذه الشاشة تسجيل جميع معاملاتك المالية بسهولة وسرعة، سواء كانت مشتريات أو مبيعات.</p>
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="invoice_component1"><strong>نوع الفاتورة:</strong> يتم أختيار نوع الفاتورة اما مبيعات او مشتريات.</li>
+                <li data-translate="invoice_component2"><strong>اسم الحساب:</strong> حقل لاختيار الحساب الذي ستتم عليه العملية.</li>
+                <li data-translate="invoice_component3"><strong>التاريخ:</strong> حقل لاختيار تاريخ الفاتورة.</li>
+                <li data-translate="invoice_component4"><strong>التفاصيل:</strong> حقل لإضافة وصف موجز للفاتورة.</li>
+                <li data-translate="invoice_component5"><strong>المبلغ:</strong> حقل لإدخال قيمة الفاتورة.</li>
+                <li data-translate="invoice_component6"><strong>المبلغ المدفوع نقداً:</strong> حقل لإدخال المبلغ المدفوع نقداً.</li>
+                <li data-translate="invoice_component7"><strong>العملة:</strong> قائمة منسدلة لاختيار العملة المستخدمة في العملية.</li>
+                <li data-translate="invoice_component8"><strong>زر حفظ الفاتورة:</strong> بحيث يتم التحديد تلقائيا خيار لتحديد ما إذا كانت الفاتورة مبيعات (لك) أو مشتريات (عليك).</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="invoice_usage1"><strong>تحديد نوع الفاتورة:</strong> اختر ما إذا كانت العملية مبيعات أو مشتريات.</li>
+            <li data-translate="invoice_usage2"><strong>اسم الحساب:</strong> ابدأ بكتابة اسم الحساب، وستظهر لك اقتراحات من حساباتك الموجودة. يمكنك أيضاً إضافة حساب جديد مباشرة من هنا.</li>
+            <li data-translate="invoice_usage3"><strong>إدخال المبلغ:</strong> أدخل المبلغ بدقة. يدعم التطبيق الأرقام العشرية.</li>
+            <li data-translate="invoice_usage4"><strong>تحديد التفاصيل:</strong> اكتب وصفاً واضحاً للفاتورة لمساعدتك في تذكرها لاحقاً.</li>
+            <li data-translate="invoice_usage5"><strong>اختيار العملة:</strong> اختر العملة المناسبة للعملية من القائمة المنسدلة.</li>
+            <li data-translate="invoice_usage6"><strong>تحديد التاريخ:</strong> اضغط على حقل التاريخ لفتح منتقي التاريخ واختيار التاريخ الصحيح للعملية.</li>
+            <li data-translate="invoice_usage7"><strong>حفظ الفاتورة:</strong> بعد إدخال جميع البيانات، اضغط على زر الحفظ إلى الحساب المحدد.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="invoice_tip">اضافة الفاتورة متاحة إما من القائمة الجانبية في الشاشة الرئيسية أو من شاشة تفاصيل الحساب.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">💰</span>
+            <span data-translate="currencies_title">شاشة العملات</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="currencies_overview">نظرة عامة على شاشة العملات</h3>
+        <p data-translate="currencies_description">تتيح لك هذه الشاشة إدارة العملات التي تستخدمها في تطبيق محفظتي الذكية ، بما في ذلك إضافة عملات جديدة وتحديد العملة المحلية.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="currencies_component1"><strong>قائمة العملات:</strong> تعرض جميع العملات المتاحة في التطبيق، بما في ذلك العملات الافتراضية والعملات التي أضفتها.</li>
+                <li data-translate="currencies_component2"><strong>زر إضافة عملة:</strong> لإضافة عملة جديدة إلى القائمة.</li>
+                <li data-translate="currencies_component3"><strong>زر تعديل عملة:</strong> لتعديل اسم تصنيف الحساب.</li>
+                <li data-translate="currencies_component4"><strong>زر حذف عملة:</strong> لتعديل اسم تصنيف الحساب.</li>
+                <li data-translate="currencies_component5"><strong>العملة المحلية:</strong> يتم تمييز العملة المحلية التي تم تحديدها تلقائياً بناءً على موقعك الجغرافي عند تسجيل الدخول لأول مرة.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="currencies_usage1"><strong>إضافة عملة جديدة:</strong> اضغط على زر الإضافة (+) في الزاوية السفلية اليمنى، ثم أدخل اسم العملة.</li>
+            <li data-translate="currencies_usage2"><strong>تعديل عملة:</strong> اضغط على زر القلم لأي عملة في القائمة لتعديل اسمها.</li>
+            <li data-translate="currencies_usage3"><strong>حذف عملة:</strong> عند الصغط علي زر حذف عملة لحذفه (لا يمكن حذف العملات الافتراضية او تحتوي على عمليات).</li>
+            <li data-translate="currencies_usage4"><strong>تحديد العملة المحلية:</strong> يمكنك تغيير العملة المحلية الإفتراضية يدوياً من هذه الشاشة إذا لزم الأمر.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="currencies_tip">تأكد من أن العملة المحلية محددة بشكل صحيح لضمان دقة التقارير والإحصائيات المالية.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">🏷️</span>
+            <span data-translate="account_categories_title">شاشة تصنيف الحسابات</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="account_categories_overview">نظرة عامة على شاشة تصنيف الحسابات</h3>
+        <p data-translate="account_categories_description">تساعدك هذه الشاشة على تنظيم حساباتك المالية عن طريق تصنيفها إلى أنواع مختلفة (مثل: بنك، نقد، بطاقة ائتمان، إلخ)، مما يسهل تتبع أموالك.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="categories_component1"><strong>قائمة التصنيفات:</strong> تعرض جميع أنواع الحسابات المتاحة.</li>
+                <li data-translate="categories_component2"><strong>زر إضافة تصنيف:</strong> لإضافة نوع حساب جديد.</li>
+                <li data-translate="categories_component3"><strong>زر تعديل تصنيف:</strong> لتعديل اسم تصنيف الحساب.</li>
+                <li data-translate="categories_component4"><strong>زر حذف تصنيف:</strong> لتعديل اسم تصنيف الحساب.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="categories_usage1"><strong>إضافة تصنيف جديد:</strong> اضغط على زر الإضافة (+) в الزاوية السفلية اليمنى، ثم أدخل اسم التصنيف.</li>
+            <li data-translate="categories_usage2"><strong>تعديل تصنيف:</strong> اضغط على أي تصنيف في القائمة لتعديل اسمه.</li>
+            <li data-translate="categories_usage3"><strong>حذف تصنيف:</strong> عند الصغط علي زر حذف تصنيف لحذفه (لا يمكن حذف التصنيفات الافتراضية او تحتوي على حسابات).</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="categories_tip">استخدم تصنيفات واضحة ومحددة لتسهيل إدارة حساباتك والبحث عنها لاحقاً.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">📥</span>
+            <span data-translate="import_title">خيار استيراد البيانات</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="import_overview">نظرة عامة على شاشة استيراد البيانات</h3>
+        <p data-translate="import_description">تتيح لك هذه الشاشة استيراد بياناتك المالية من مصادر خارجية إلى تطبيق محفظتي الذكية ، مما يسهل عليك نقل سجلاتك المالية.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="import_component1"><strong>زر اختيار الملف:</strong> لتحديد ملف البيانات الذي ترغب في استيراده.</li>
+                <li data-translate="import_component2"><strong>زر الاستيراد:</strong> لبدء عملية استيراد البيانات.</li>
+                <li data-translate="import_component3"><strong>حالة الاستيراد:</strong> يعرض تقدم عملية الاستيراد وأي أخطاء محتملة.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="import_usage1"><strong>اختيار الملف:</strong> اضغط على زر اختيار الملف لتحديد ملف البيانات (عادةً ما يكون ملف db) من جهازك.</li>
+            <li data-translate="import_usage2"><strong>بدء الاستيراد:</strong> بعد تحديد الملف، اضغط على زر الاستيراد لبدء العملية.</li>
+            <li data-translate="import_usage3"><strong>مراجعة الحالة:</strong> راقب حالة الاستيراد للتأكد من اكتمالها بنجاح.</li>
+            <li data-translate="import_usage4"><strong>تنبية:</strong> في حال كان عندك نسخة احتياطيه لتطبيق معين ولم تتوافق مع الاستيراد وتريد استيرادها للتطبيق تواصل مع المطور.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong>
+            <span data-translate="import_tip">تأكد من أن تنسيق ملف البيانات يتوافق مع المتطلبات المحددة للتطبيق لتجنب أخطاء الاستيراد.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">📊</span>
+            <span data-translate="reports_title">شاشة التقارير</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="reports_overview">نظرة عامة على شاشة التقارير</h3>
+        <p data-translate="reports_description">توفر لك شاشة التقارير نظرة شاملة على وضعك المالي من خلال رسوم بيانية وتقارير مفصلة عن إيراداتك ومصروفاتك.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="reports_component1"><strong>التقارير الجدولية:</strong> تقدم تقارير مفصلة في شكل جداول، يمكن تصفيتها وتصديرها.</li>
+                <li data-translate="reports_component2"><strong>خيارات التصفية:</strong> تتيح لك تصفية التقارير حسب التاريخ، الحساب، أو نوع العملية.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="reports_usage1"><strong>اختيار نوع التقرير:</strong> اختر نوع التقرير الذي ترغب في عرضه (مثل: تقرير الإيرادات، تقرير المصروفات، تقرير شامل).</li>
+            <li data-translate="reports_usage2"><strong>تحديد الفترة الزمنية:</strong> حدد الفترة الزمنية للتقرير (يومي، أسبوعي، شهري، سنوي، أو مخصص).</li>
+            <li data-translate="reports_usage3"><strong>تصفية البيانات:</strong> استخدم خيارات التصفية لعرض البيانات الخاصة بحسابات معينة أو أنواع عمليات محددة.</li>
+            <li data-translate="reports_usage4"><strong>تصدير التقرير:</strong> يمكن你 تصدير التقارير إلى ملفات PDF لمشاركتها أو تحليلها خارج التطبيق.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="reports_tip">استخدم التقارير بانتظام لمراقبة صحتك المالية واتخاذ قرارات مستنيرة.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">🔄</span>
+            <span data-translate="sync_title">المزامنة اللحظية لجهازين</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="sync_overview">نظرة عامة المزامنة اللحظية للبيانات</h3>
+        <p data-translate="sync_description">توفر لك هذة الميزة اذا كان لديك اكثر من هاتف فهذه الميزة تمكنك من إضافة او تعديل او حذف العمليات بأحد الهواتف وستظهر التغييرات في الجهاز الاخر مباشرة.</p>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="sync_usage1"><strong>تنبية: </strong> بهذه الميزة يمكنك إستخدام جهازين فقط وعند الرغبة في زيادة عدد تصريح الاجهزة يتم التواصل مع المطور</li>
+            <li data-translate="sync_usage2"><strong>الخطوة الأولى:</strong> قم بتثبيت تطبيق محفظتي الذكية بالهاتف الاخر.</li>
+            <li data-translate="sync_usage3"><strong>الخطوة الثانية:</strong> قم بتسجيل الدخول بنفس البريد الالكتروني الذي قمت بإستخدامة في الهاتف السابق.</li>
+            <li data-translate="sync_usage4"><strong>ملاحظة: </strong> لابد ان يكون نفس البريد الالكتروني المُستخدم في الهاتف السابق.</li>
+            <li data-translate="sync_usage5"><strong>الخطوة الاخيرة:</strong> بعد تسجيل الدخول سيتم المزامنه تلقائيا وجلب بيانات الحساب واظهارها في الهاتف الجديد.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="sync_tip">باستطاعتك باي وقت حذف احد الاجهزة واضافة اخر من التطبيق مباشرة دون الرجوع للمطور.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">🎁</span>
+            <span data-translate="free_plan_title">الخطة المجانية والمكافآت</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <p data-translate="free_plan_description">عند تسجيلك لأول مرة، تحصل على باقة مجانية تتيح لك إضافة 100 عملية مالية. بعد استهلاك هذه الباقة، يمكنك الاستمرار في استخدام التطبيق عبر الطرق التالية:</p>
+        <ul>
+            <li data-translate="free_plan1"><b>الحصة اليومية:</b> ستحصل تلقائياً على 3 عمليات مجانية كل يوم.</li>
+            <li data-translate="free_plan2"><b>مشاهدة إعلان:</b> من القائمة الجانبية، شاهد إعلاناً واحصل على 3 عمليات إضافية لرصيدك.</li>
+            <li data-translate="free_plan3"><b>دعوة الأصدقاء:</b> شارك التطبيق مع أصدقائك واحصل على مكافآت سخية وإشتراك دائم بالتطبيق.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">🤝</span>
+            <span data-translate="referral_title">كيف تعمل دعوة الأصدقاء؟</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <p data-translate="referral_description">نظام الدعوات يكافئك أنت وصديقك!</p>
+        <ul>
+            <li data-translate="referral1"><strong>أنت (الداعي):</strong> اذهب للقائمة الجانبية واختر "دعوة صديق" وأرسل رابط الدعوة الخاص بك. مقابل كل صديق يسجل عبر رابطك، ستحصل على 5 عمليات كمكافئة واعطائك 10 عمليات اضافية لكل 5 اشخاص تم تسجيلهم عبر رابط الدعوة الخاص بك.</li>
+            <li data-translate="referral2"><strong>المكافئة الكبرى للداعي:</strong> عند قيام 5 اشخاص من الذين قاموا بالتسجيل بواسطة رابطك بالاشتراك بالنسخة الكاملة سيتم اشتراكك بالنسخة الكاملة مجانا.</li>
+            <li data-translate="referral3"><strong>صديقك (المدعو):</strong> عندما يسجل صديقك عبر رابطك، سيحصل هو على 3 عمليات إضافية فوق باقته المجانية كهدية ترحيب.</li>
+        </ul>
+        <p data-translate="referral_note">يمكنك دائماً متابعة رصيد مكافآتك من القائمة الجانبية.</p>
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="referral_tip">إستفد من دعوات الاصدقاء بمشاركة رابطك في المجموعات والمنتديات لتكسب ميزات أضافية.</span>
+        </div>
+    </div>
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">⭐</span>
+            <span data-translate="purchase_title">شراء النسخة الكاملة</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <p data-translate="purchase_description">للحصول على عدد غير محدود من العمليات وإزالة كل القيود، يمكنك شراء النسخة الكاملة للتطبيق:</p>
+        <ul>
+            <li data-translate="purchase1">من القائمة الجانبية (بعد انتهاء باقتك)، اختر "شراء التطبيق".</li>
+            <li data-translate="purchase2">سيظهر لك كود شراء فريد مرتبط بحسابك.</li>
+            <li data-translate="purchase3">انسخ هذا الكود وأرسله لنا عبر واتساب لإرشادك حول خطوات الدفع وتفعيل حسابك بشكل فوري.</li>
+            <li data-translate="purchase4">الترخيص يتيح لك استخدام التطبيق على جهازين بنفس الحساب.</li>
+        </ul>
+        <div class="tip-box">
+            <strong data-translate="tip_note">ملاحظة: </strong> <span data-translate="purch_tip">  تم جعل النسخة الكاملة بمبلغ رمزي وذلك لتغطية الرسوم الشهري لمنصة جوجل لتغطية ميزات التطبيق الإحترافية فلا تتردد بالشراء دعماً للتطبيق. </span>
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="help-section">
+    <div class="help-header" onclick="toggleSection(this)">
+        <div class="help-title">
+            <span class="help-icon">📞</span>
+            <span data-translate="contact_title">شاشة التواصل والدعم (Contact)</span>
+        </div>
+        <span class="expand-icon">▼</span>
+    </div>
+    <div class="help-content">
+        <h3 data-translate="contact_overview">نظرة عامة على شاشة التواصل والدعم</h3>
+        <p data-translate="contact_description">تتيح لك هذه الشاشة التواصل مع فريق دعم محفظتي الذكية للحصول على المساعدة أو تقديم الملاحظات.</p>
+
+        <div class="feature-highlight">
+            <strong data-translate="main_components">المكونات الرئيسية:</strong>
+            <ul>
+                <li data-translate="contact_component1"><strong>معلومات الاتصال:</strong> تعرض أرقام الهواتف، البريد الإلكتروني، وروابط وسائل التواصل الاجتماعي.</li>
+                <li data-translate="contact_component2"><strong>نموذج الاتصال:</strong> لتقديم استفسار أو ملاحظة مباشرة من داخل التطبيق.</li>
+            </ul>
+        </div>
+
+        <h3 data-translate="how_to_use">كيفية الاستخدام:</h3>
+        <ul>
+            <li data-translate="contact_usage1"><strong>الاتصال المباشر:</strong> اضغط على أرقام الهواتف أو عناوين البريد الإلكتروني للاتصال مباشرة.</li>
+            <li data-translate="contact_usage2"><strong>إرسال رسالة:</strong> املأ نموذج الاتصال بالمعلومات المطلوبة واضغط على إرسال.</li>
+        </ul>
+
+        <div class="tip-box">
+            <strong data-translate="tip">نصيحة:</strong> <span data-translate="contact_tip">لا تتردد في التواصل معنا لأي استفسار أو اقتراح لتحسين التطبيق. ملاحظاتك قيمة جداً لنا.</span>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // بيانات الترجمة الكاملة مع إضافة الفرنسية
+    const translations = {
+        ar: {
+            app_title: "نظرة عامة عن تطبيق محفظتي الذكية",
+            app_description: "دليل شامل لاستخدام جميع مميزات التطبيق بسهولة وفعالية",
+            features_title: "أهم مميزات التطبيق",
+            features_overview: "نظرة عامة على المميزات للتطبيق",
+            features_description: "تم تصميم التطبيق بكل عناية وحرص ليناسب كل شخص مهتم بتدوين كل حركاتة الماليه سواء له(دائن) او علية(مدين).",
+            main_features: "التفاصيل الرئيسية:",
+            feature1: "أبرز الميزات التي ستغير طريقة إدارتك لحساباتك",
+            feature2: "📌 أهم ميزة للتطبيق بإمكان المستخدم استخدام التطبيق بجهازين لنفس الحساب بحيث اي عملية يتم اضافتها في احد الاجهزة تظهر اوتوماتيكيا بالجهاز الاخر بنفس اللحضة",
+            feature3: "✅ سهولة فائقة: واجهة بسيطة وذكية تمكنك من تسجيل أي عملية مالية في ثوانٍ.",
+            feature4: "📊 إدارة شاملة للحسابات: أنشئ ملفًا لكل عميل، مورد، أو حساب شخصي وتتبع كل معاملاته بدقة.",
+            feature5: "💵 دعم تعدد العملات: أدر حساباتك بعملتك المحلية، وأي عملة أخرى تضيفها بنفسك.",
+            feature6: "📄 تقارير PDF احترافية: بضغطة زر، قم بإنشاء كشوفات حساب وتقارير مالية مجمعة أو مفصلة، وشاركها مباشرة مع عملائك عبر مشاركتة بالواتساب او اي تطبيق اخر.",
+            feature7: "💻 الربط بالكمبيوتر: قم بربط التطبيق بالابتوب وتصفح التقارير بكل اريحية تأكد بان الهاتف واللابتوب مرتبطان بنفس شبكة wifi.",
+            feature8: "☁️ مزامنة سحابية آمنة: لاتحتاج لنسخ إحتياطية فبياناتك في أمان تام! تتم مزامنتها تلقائيًا مع حسابك الخاص في جوجل.",
+            feature9: "🔒 أمان وحماية: حافظ على سرية بياناتك المالية عبر قفل التطبيق بكلمة مرور أو ببصمة إصبعك.",
+            feature10: "🌐 يعمل بدون إنترنت: لا تقلق بشدر الاتصال. يمكنك تسجيل وتصفح كل عملياتك في أي وقت، وسيتم المزامنة تلقائيًا عند توفر الشبكة.",
+            feature11: "🔄 استيراد البيانات: هل لديك بيانات في تطبيقات قديمة أو نسخ احتياطية؟ يمكنك استيرادها بسهولة ومتابعة عملك بدون انقطاع.",
+            feature12: "🧾 نظام فواتير متكامل: قم بإنشاء فواتير مبيعات ومشتريات احترافية، وتتبع المبالغ المدفوعة والمتبقية بسهولة.",
+            tip: "نصيحة:",
+            tip_content: "لا تتردد بإستخدام التطبيق فهو يعتمد على أعلى درجات الامان والتشفير الموصى به من جوجل.",
+            main_screen_title: "الشاشة الرئيسية",
+            main_screen_overview: "نظرة عامة على الشاشة الرئيسية",
+            main_screen_description: "الشاشة الرئيسية هي لوحة التحكم الرئيسية لتطبيق محفظتي الذكية ، حيث يمكنك إدارة جميع حساباتك المالية وعملياتك. توفر هذه الشاشة نظرة عامة سريعة على حالتك المالية وتتيح لك الوصول السريع إلى الميزات الأساسية.",
+            main_components: "المكونات الرئيسية:",
+            component1: "<strong>الشريط العلوي :</strong> يحتوي على عنوان تصنيف الحساب، زر القائمة الجانبية (☰)، خيار البحث، وخيار التقارير وخيار الربط بالكمبيوتر.",
+            component2: "<strong>قائمة الحسابات:</strong> تعرض جميع حساباتك المالية، مع إجمالي الرصيد لكل حساب.",
+            component3: "<strong>الشريط السفلي :</strong> يعرض ملخصاً لإجمالي المبالغ المدينة والدائنة، بالإضافة إلى العملة المحلية المحددة.",
+            component4: "<strong>زر الإضافة:</strong> يقع في الشريط السفلي، ويستخدم لإضافة حساب جديد أو عملية مالية جديدة.",
+            how_to_use: "كيفية الاستخدام:",
+            usage1: "<strong>التنقل في القائمة الجانبية:</strong> اضغط على أيقونة القائمة (ثلاثة خطوط أفقية ☰) في الزاوية العلوية اليمنى للوصول إلى القائمة الجانبية.",
+            usage2: "<strong>البحث عن حساب:</strong> استخدم أيقونة البحث في الشريط العلوي للبحث عن حسابات معينة.",
+            usage3: "<strong>عرض التقارير:</strong> للوصول للتقارير، اضغط على أيقونة PDF في الشريط العلوي.",
+            usage4: "<strong>إضافة حساب جديد:</strong> اضغط على زر الإضافة (+) في الشريط السفلي.",
+            usage5: "<strong>إضافة عملية جديدة:</strong> اضغط على زر الإضافة (+) في الشريط السفلي، ثم اختر \"إضافة عملية جديدة\".",
+            usage6: "<strong>تفاصيل الحساب:</strong> اضغط على أي حساب في القائمة لعرض تفاصيله وعملياته المالية.",
+            main_screen_tip: "يمكنك تخصيص العملة المحلية من خلال إعدادات التطبيق لضمان دقة التقارير المالية.",
+            personal_data_title: "خيار البيانات الشخصية",
+            personal_data_overview: "نظرة عامة على شاشة البيانات الشخصية",
+            personal_data_description: "تتيح لك هذه الشاشة عرض وتعديل معلومات ملفك الشخصي في تطبيق محفظتي الذكية.",
+            personal_component1: "<strong>الايقونة:</strong> إختر الصورة او الشعار المناسب لك بالضغط على رمز الكاميرا.",
+            personal_component2: "<strong>الاسم الكامل:</strong> تسجيل الاسم المناسب.",
+            personal_component3: "<strong>اسم الشركة(إختياري):</strong> إدخال اسم الشركة المناسبة.",
+            personal_component4: "<strong>العنوان:</strong> إدخال العنوان المناسب.",
+            personal_component5: "<strong>رقم الهاتف:</strong> بإمكانك اظافة اكثر من رقم هاتف.",
+            personal_component6: "<strong>البريد الإلكتروني:</strong> يتم عرض بريدك الاكتروني اوتوماتيكيا.",
+            personal_component7: "<strong>زر الحفظ:</strong> لحفظ البيانات الجديده.",
+            personal_usage1: "<strong>عرض البيانات:</strong> ببساطة افتح هذه الشاشة لعرض معلوماتك والتعديل عليها.",
+            personal_data_tip: "تأكد من تحديث معلوماتك الشخصية بانتظام لضمان دقة البيانات.",
+            add_operations_title: "شاشة إضافة العمليات",
+            add_operations_overview: "نظرة عامة على شاشة إضافة العمليات",
+            add_operations_description: "تتيح لك هذه الشاشة تسجيل جميع معاملاتك المالية بسهولة وسرعة، سواء كانت إيرادات أو مصروفات.",
+            operations_component1: "<strong>اسم الحساب:</strong> حقل لاختيار الحساب الذي ستتم عليه العملية.",
+            operations_component2: "<strong>المبلغ:</strong> حقل لإدخال قيمة العملية.",
+            operations_component3: "<strong>التفاصيل:</strong> حقل لإضافة وصف موجز للعملية.",
+            operations_component4: "<strong>العملة:</strong> قائمة منسدلة لاختيار العملة المستخدمة في العملية.",
+            operations_component5: "<strong>التاريخ:</strong> حقل لاختيار تاريخ العملية.",
+            operations_component6: "<strong>زر حفظ نوع العملية:</strong> خيار لتحديد ما إذا كانت العملية إيراداً (لك) أو مصروفاً (عليك).",
+            operations_usage1: "<strong>اختيار الحساب:</strong> ابدأ بكتابة اسم الحساب، وستظهر لك اقتراحات من حساباتك الموجودة. يمكنك أيضاً إضافة حساب جديد مباشرة من هنا.",
+            operations_usage2: "<strong>إدخال المبلغ:</strong> أدخل المبلغ بدقة. يدعم التطبيق الأرقام العشرية.",
+            operations_usage3: "<strong>تحديد التفاصيل:</strong> اكتب وصفاً واضحاً للعملية لمساعدتك في تذكرها لاحقاً.",
+            operations_usage4: "<strong>اختيار العملة:</strong> اختر العملة المناسبة للعملية من القائمة المنسدلة.",
+            operations_usage5: "<strong>تحديد التاريخ:</strong> اضغط على حقل التاريخ لفتح منتقي التاريخ واختيار التاريخ الصحيح للعملية.",
+            operations_usage6: "<strong>تحديد النوع:</strong> اختر ما إذا كانت العملية إيراداً أو مصروفاً.",
+            operations_usage7: "<strong>حفظ العملية:</strong> بعد إدخال جميع البيانات، اضغط على زر لك أو عليك لإضافة العملية إلى الحساب المحدد.",
+            operations_tip: "يمكنك استخدام حقل التفاصيل لإضافة ملاحظات إضافية حول العملية، مثل اسم المستلم أو الغرض من الدفع.",
+            account_details_title: "شاشة تفاصيل الحساب",
+            account_details_overview: "نظرة عامة على شاشة تفاصيل الحساب",
+            account_details_description: "تُظهر هذه الشاشة جميع العمليات المالية المتعلقة بحساب معين، مما يمنحك نظرة مفصلة على تدفق الأموال داخل هذا الحساب.",
+            account_component1: "<strong>اسم الحساب والرصيد:</strong> يعرض اسم الحساب وإجمالي رصيده الحالي في الأعلى.",
+            account_component2: "<strong>قائمة العمليات:</strong> تعرض جميع الإيرادات والمصروفات المرتبطة بهذا الحساب، مرتبة حسب التاريخ.",
+            account_component3: "<strong>تفاصيل العملية:</strong> كل عملية تعرض المبلغ، التاريخ، والوصف.",
+            account_component4: "<strong>زر إضافة عملية:</strong> لإنشاء عملية جديدة مباشرة لهذا الحساب.",
+            account_usage1: "<strong>عرض العمليات:</strong> قم بالتمرير لأسفل لعرض جميع العمليات التاريخية للحساب.",
+            account_usage2: "<strong>إضافة عملية جديدة:</strong> اضغط على زر الإضافة (+) لإضافة إيراد أو مصروف جديد لهذا الحساب تحديداً.",
+            account_usage3: "<strong>تعديل/حذف عملية:</strong> اضغط مطولاً على أي عملية لخيارات التعديل أو الحذف.",
+            account_usage4: "<strong>عرض التقرير:</strong> للوصول للتقارير، اضغط على أيقونة PDF في الشريط العلوي سيتم تحديد إسم الحساب والعملة تلقائيًا بناءً على الشاشة الحالية.",
+            account_tip: "يمكنك استخدام هذه الشاشة لمراجعة نفقاتك وإيراداتك الشهرية لحساب معين وتحديد أنماط الإنفاق.",
+            invoice_title: "شاشة فاتورة جديدة",
+            invoice_overview: "نظرة عامة على شاشة إضافة فاتورة جديدة",
+            invoice_description: "تتيح لك هذه الشاشة تسجيل جميع معاملاتك المالية بسهولة وسرعة، سواء كانت مشتريات أو مبيعات.",
+            invoice_component1: "<strong>نوع الفاتورة:</strong> يتم أختيار نوع الفاتورة اما مبيعات او مشتريات.",
+            invoice_component2: "<strong>اسم الحساب:</strong> حقل لاختيار الحساب الذي ستتم عليه العملية.",
+            invoice_component3: "<strong>التاريخ:</strong> حقل لاختيار تاريخ الفاتورة.",
+            invoice_component4: "<strong>التفاصيل:</strong> حقل لإضافة وصف موجز للفاتورة.",
+            invoice_component5: "<strong>المبلغ:</strong> حقل لإدخال قيمة الفاتورة.",
+            invoice_component6: "<strong>المبلغ المدفوع نقداً:</strong> حقل لإدخال المبلغ المدفوع نقداً.",
+            invoice_component7: "<strong>العملة:</strong> قائمة منسدلة لاختيار العملة المستخدمة في العملية.",
+            invoice_component8: "<strong>زر حفظ الفاتورة:</strong> بحيث يتم التحديد تلقائيا خيار لتحديد ما إذا كانت الفاتورة مبيعات (لك) أو مشتريات (عليك).",
+            invoice_usage1: "<strong>تحديد نوع الفاتورة:</strong> اختر ما إذا كانت العملية مبيعات أو مشتريات.",
+            invoice_usage2: "<strong>اسم الحساب:</strong> ابدأ بكتابة اسم الحساب، وستظهر لك اقتراحات من حساباتك الموجودة. يمكنك أيضاً إضافة حساب جديد مباشرة من هنا.",
+            invoice_usage3: "<strong>إدخال المبلغ:</strong> أدخل المبلغ بدقة. يدعم التطبيق الأرقام العشرية.",
+            invoice_usage4: "<strong>تحديد التفاصيل:</strong> اكتب وصفاً واضحاً للفاتورة لمساعدتك في تذكرها لاحقاً.",
+            invoice_usage5: "<strong>اختيار العملة:</strong> اختر العملة المناسبة للعملية من القائمة المنسدلة.",
+            invoice_usage6: "<strong>تحديد التاريخ:</strong> اضغط على حقل التاريخ لفتح منتقي التاريخ واختيار التاريخ الصحيح للعملية.",
+            invoice_usage7: "<strong>حفظ الفاتورة:</strong> بعد إدخال جميع البيانات، اضغط على زر الحفظ إلى الحساب المحدد.",
+            invoice_tip: "اضافة الفاتورة متاحة إما من القائمة الجانبية في الشاشة الرئيسية أو من شاشة تفاصيل الحساب.",
+            currencies_title: "شاشة العملات",
+            currencies_overview: "نظرة عامة على شاشة العملات",
+            currencies_description: "تتيح لك هذه الشاشة إدارة العملات التي تستخدمها في تطبيق محفظتي الذكية ، بما في ذلك إضافة عملات جديدة وتحديد العملة المحلية.",
+            currencies_component1: "<strong>قائمة العملات:</strong> تعرض جميع العملات المتاحة في التطبيق، بما في ذلك العملات الافتراضية والعملات التي أضفتها.",
+            currencies_component2: "<strong>زر إضافة عملة:</strong> لإضافة عملة جديدة إلى القائمة.",
+            currencies_component3: "<strong>زر تعديل عملة:</strong> لتعديل اسم تصنيف الحساب.",
+            currencies_component4: "<strong>زر حذف عملة:</strong> لتعديل اسم تصنيف الحساب.",
+            currencies_component5: "<strong>العملة المحلية:</strong> يتم تمييز العملة المحلية التي تم تحديدها تلقائياً بناءً على موقعك الجغرافي عند تسجيل الدخول لأول مرة.",
+            currencies_usage1: "<strong>إضافة عملة جديدة:</strong> اضغط على زر الإضافة (+) في الزاوية السفلية اليمنى، ثم أدخل اسم العملة.",
+            currencies_usage2: "<strong>تعديل عملة:</strong> اضغط على زر القلم لأي عملة في القائمة لتعديل اسمها.",
+            currencies_usage3: "<strong>حذف عملة:</strong> عند الصغط علي زر حذف عملة لحذفه (لا يمكن حذف العملات الافتراضية او تحتوي على عمليات).",
+            currencies_usage4: "<strong>تحديد العملة المحلية:</strong> يمكنك تغيير العملة المحلية الإفتراضية يدوياً من هذه الشاشة إذا لزم الأمر.",
+            currencies_tip: "تأكد من أن العملة المحلية محددة بشكل صحيح لضمان دقة التقارير والإحصائيات المالية.",
+            account_categories_title: "شاشة تصنيف الحسابات",
+            account_categories_overview: "نظرة عامة على شاشة تصنيف الحسابات",
+            account_categories_description: "تساعدك هذه الشاشة на تنظيم حساباتك المالية عن طريق تصنيفها إلى أنواع مختلفة (مثل: بنك، نقد، بطاقة ائتمان، إلخ)، مما يسهل تتبع أموالك.",
+            categories_component1: "<strong>قائمة التصنيفات:</strong> تعرض جميع أنواع الحسابات المتاحة.",
+            categories_component2: "<strong>زر إضافة تصنيف:</strong> لإضافة نوع حساب جديد.",
+            categories_component3: "<strong>زر تعديل تصنيف:</strong> لتعديل اسم تصنيف الحساب.",
+            categories_component4: "<strong>زر حذف تصنيف:</strong> لتعديل اسم تصنيف الحساب.",
+            categories_usage1: "<strong>إضافة تصنيف جديد:</strong> اضغط على زر الإضافة (+) في الزاوية السفلية اليمنى، ثم أدخل اسم التصنيف.",
+            categories_usage2: "<strong>تعديل تصنيف:</strong> اضغط على أي تصنيف في القائمة لتعديل اسمه.",
+            categories_usage3: "<strong>حذف تصنيف:</strong> عند الصغط علي زر حذف تصنيف لحذفه (لا يمكن حذف التصنيفات الافتراضية او تحتوي على حسابات).",
+            categories_tip: "استخدم تصنيفات واضحة ومحددة لتسهيل إدارة حساباتك والبحث عنها لاحقاً.",
+            import_title: "خيار استيراد البيانات",
+            import_overview: "نظرة عامة على شاشة استيراد البيانات",
+            import_description: "تتيح لك هذه الشاشة استيراد بياناتك المالية من مصادر خارجية إلى تطبيق محفظتي الذكية ، مما يسهل عليك نقل سجلاتك المالية.",
+            import_component1: "<strong>زر اختيار الملف:</strong> لتحديد ملف البيانات الذي ترغب في استيراده.",
+            import_component2: "<strong>زر الاستيراد:</strong> لبدء عملية استيراد البيانات.",
+            import_component3: "<strong>حالة الاستيراد:</strong> يعرض تقدم عملية الاستيراد وأي أخطاء محتملة.",
+            import_usage1: "<strong>اختيار الملف:</strong> اضغط على زر اختيار الملف لتحديد ملف البيانات (عادةً ما يكون ملف db) من جهازك.",
+            import_usage2: "<strong>بدء الاستيراد:</strong> بعد تحديد الملف، اضغط على زر الاستيراد لبدء العملية.",
+            import_usage3: "<strong>مراجعة الحالة:</strong> راقب حالة الاستيراد للتأكد من اكتمالها بنجاح.",
+            import_usage4: "<strong>تنبية:</strong> في حال كان عندك نسخة احتياطيه لتطبيق معين ولم تتوافق مع الاستيراد وتريد استيرادها للتطبيق تواصل مع المطور.",
+            import_tip: "تأكد من أن تنسيق ملف البيانات يتوافق مع المتطلبات المحددة للتطبيق لتجنب أخطاء الاستيراد.",
+            reports_title: "شاشة التقارير",
+            reports_overview: "نظرة عامة على شاشة التقارير",
+            reports_description: "توفر لك شاشة التقارير نظرة شاملة على وضعك المالي من خلال رسوم بيانية وتقارير مفصلة عن إيراداتك ومصروفاتك.",
+            reports_component1: "<strong>التقارير الجدولية:</strong> تقدم تقارير مفصلة في شكل جداول، يمكن تصفيتها وتصديرها.",
+            reports_component2: "<strong>خيارات التصفية:</strong> تتيح لك تصفية التقارير حسب التاريخ، الحساب، أو نوع العملية.",
+            reports_usage1: "<strong>اختيار نوع التقرير:</strong> اختر نوع التقرير الذي ترغب في عرضه (مثل: تقرير الإيرادات، تقرير المصروفات، تقرير شامل).",
+            reports_usage2: "<strong>تحديد الفترة الزمنية:</strong> حدد الفترة الزمنية للتقرير (يومي، أسبوعي، شهري، سنوي، أو مخصص).",
+            reports_usage3: "<strong>تصفية البيانات:</strong> استخدم خيارات التصفية لعرض البيانات الخاصة بحسابات معينة أو أنواع عمليات محددة.",
+            reports_usage4: "<strong>تصدير التقرير:</strong> يمكنك تصدير التقارير إلى ملفات PDF لمشاركتها أو تحليلها خارج التطبيق.",
+            reports_tip: "استخدم التقارير بانتظام لمراقبة صحتك المالية واتخاذ قرارات مستنيرة.",
+            sync_title: "المزامنة اللحظية لجهازين",
+            sync_overview: "نظرة عامة المزامنة اللحظية للبيانات",
+            sync_description: "توفر لك هذة الميزة اذا كان لديك اكثر من هاتف فهذه الميزة تمكنك من إضافة او تعديل او حذف العمليات بأحد الهواتف وستظهر التغييرات في الجهاز الاخر مباشرة.",
+            sync_usage1: "<strong>تنبية: </strong> بهذه الميزة يمكنك إستخدام جهازين فقط وعند الرغبة في زيادة عدد تصريح الاجهزة يتم التواصل مع المطور",
+            sync_usage2: "<strong>الخطوة الأولى:</strong> قم بتثبيت تطبيق محفظتي الذكية بالهاتف الاخر.",
+            sync_usage3: "<strong>الخطوة الثانية:</strong> قم بتسجيل الدخول بنفس البريد الالكتروني الذي قمت بإستخدامة في الهاتف السابق.",
+            sync_usage4: "<strong>ملاحظة: </strong> لابد ان يكون نفس البريد الالكتروني المُستخدم في الهاتف السابق.",
+            sync_usage5: "<strong>الخطوة الاخيرة:</strong> بعد تسجيل الدخول سيتم المزامنه تلقائيا وجلب بيانات الحساب واظهارها في الهاتف الجديد.",
+            sync_tip: "باستطاعتك باي وقت حذف احد الاجهزة واضافة اخر من التطبيق مباشرة دون الرجوع للمطور.",
+            free_plan_title: "الخطة المجانية والمكافآت",
+            free_plan_description: "عند تسجيلك لأول مرة، تحصل على باقة مجانية تتيح لك إضافة 100 عملية مالية. بعد استهلاك هذه الباقة، يمكنك الاستمرار في استخدام التطبيق عبر الطرق التالية:",
+            free_plan1: "<b>الحصة اليومية:</b> ستحصل تلقائياً على 3 عمليات مجانية كل يوم.",
+            free_plan2: "<b>مشاهدة إعلان:</b> من القائمة الجانبية، شاهد إعلاناً واحصل على 3 عمليات إضافية لرصيدك.",
+            free_plan3: "<b>دعوة الأصدقاء:</b> شارك التطبيق مع أصدقائك واحصل على مكافآت سخية وإشتراك دائم بالتطبيق.",
+            referral_title: "كيف تعمل دعوة الأصدقاء؟",
+            referral_description: "نظام الدعوات يكافئك أنت وصديقك!",
+            referral1: "<strong>أنت (الداعي):</strong> اذهب للقائمة الجانبية واختر \"دعوة صديق\" وأرسل رابط الدعوة الخاص بك. مقابل كل صديق يسجل عبر رابطك، ستحصل على 5 عمليات كمكافئة واعطائك 10 عمليات اضافية لكل 5 اشخاص تم تسجيلهم عبر رابط الدعوة الخاص بك.",
+            referral2: "<strong>المكافئة الكبرى للداعي:</strong> عند قيام 5 اشخاص من الذين قاموا بالتسجيل بواسطة رابطك بالاشتراك بالنسخة الكاملة سيتم اشتراكك بالنسخة الكاملة مجانا.",
+            referral3: "<strong>صديقك (المدعو):</strong> عندما يسجل صديقك عبر رابطك، سيحصل هو على 3 عمليات إضافية فوق باقته المجانية كهدية ترحيب.",
+            referral_note: "يمكنك دائماً متابعة رصيد مكافآتك من القائمة الجانبية.",
+            referral_tip: "إستفد من دعوات الاصدقاء بمشاركة رابطك في المجموعات والمنتديات لتكسب ميزات أضافية.",
+            purchase_title: "شراء النسخة الكاملة",
+            purchase_description: "للحصول على عدد غير محدود من العمليات وإزالة كل القيود، يمكنك شراء النسخة الكاملة للتطبيق:",
+            purchase1: "من القائمة الجانبية (بعد انتهاء باقتك)، اختر \"شراء التطبيق\".",
+            purchase2: "سيظهر لك كود شراء فريد مرتبط بحسابك.",
+            purchase3: "انسخ هذا الكود وأرسله لنا عبر واتساب لإرشادك حول خطوات الدفع وتفعيل حسابك بشكل فوري.",
+            purchase4: "الترخيص يتيح لك استخدام التطبيق على جهازين بنفس الحساب.",
+           purch_tip: "تم جعل النسخة الكاملة بمبلغ رمزي وذلك لتغطية الرسوم الشهري لمنصة جوجل لتغطية ميزات التطبيق الإحترافية فلا تتردد بالشراء دعماً للتطبيق.",
+            tip_note:"ملاحظة: ",
+            contact_title: "شاشة التواصل والدعم (Contact)",
+            contact_overview: "نظرة عامة على شاشة التواصل والدعم",
+            contact_description: "تتيح لك هذه الشاشة التواصل مع فريق دعم محفظتي الذكية للحصول على المساعدة أو تقديم الملاحظات.",
+            contact_component1: "<strong>معلومات الاتصال:</strong> تعرض أرقام الهواتف، البريد الإلكتروني، وروابط وسائل التواصل الاجتماعي.",
+            contact_component2: "<strong>نموذج الاتصال:</strong> لتقديم استفسار أو ملاحظة مباشرة من داخل التطبيق.",
+            contact_usage1: "<strong>الاتصال المباشر:</strong> اضغط على أرقام الهواتف أو عناوين البريد الإلكتروني للاتصال مباشرة.",
+            contact_usage2: "<strong>إرسال رسالة:</strong> املأ نموذج الاتصال بالمعلومات المطلوبة واضغط على إرسال.",
+            contact_tip: "لا تتردد في التواصل معنا لأي استفسار أو اقتراح لتحسين التطبيق. ملاحظاتك قيمة جداً لنا."
+        },
+        en: {
+            app_title: "My Smart Wallet Overview",
+            app_description: "A comprehensive guide to easily and effectively use all app features",
+            features_title: "Main App Features",
+            features_overview: "Overview of App Features",
+            features_description: "The app is carefully designed to suit everyone interested in recording all their financial movements, whether they are creditors or debtors.",
+            main_features: "Main Details:",
+            feature1: "Key features that will change how you manage your accounts",
+            feature2: "📌 The most important feature: Users can use the app on two devices with the same account, so any transaction added on one device automatically appears on the other device instantly",
+            feature3: "✅ High ease of use: A simple and smart interface that allows you to record any financial transaction in seconds.",
+            feature4: "📊 Comprehensive account management: Create a file for each client, supplier, or personal account and track all their transactions accurately.",
+            feature5: "💵 Multi-currency support: Manage your accounts in your local currency, and any other currency you add yourself.",
+            feature6: "📄 Professional PDF reports: With one click, create account statements and financial reports, both summary and detailed, and share them directly with your clients via WhatsApp or any other app.",
+            feature7: "💻 Computer linking: Link the app to your laptop and browse reports comfortably. Make sure the phone and laptop are connected to the same wifi network.",
+            feature8: "☁️ Secure cloud sync: You don't need backups! Your data is completely safe! It is automatically synced with your Google account.",
+            feature9: "🔒 Security and protection: Maintain the confidentiality of your financial data by locking the app with a password or fingerprint.",
+            feature10: "🌐 Works offline: Don't worry about connection. You can record and browse all your transactions at any time, and synchronization will occur automatically when the network is available.",
+            feature11: "🔄 Data import: Do you have data in old applications or backups? You can import them easily and continue your work without interruption.",
+            feature12: "🧾 Integrated invoice system: Create professional sales and purchase invoices, and easily track paid and remaining amounts.",
+            tip: "Tip:",
+            tip_content: "Don't hesitate to use the app as it relies on the highest levels of security and encryption recommended by Google.",
+            main_screen_title: "Main Screen",
+            main_screen_overview: "Overview of the Main Screen",
+            main_screen_description: "The main screen is the main control panel for the My Smart Wallet, where you can manage all your financial accounts and transactions. This screen provides a quick overview of your financial status and gives you quick access to basic features.",
+            main_components: "Main Components:",
+            component1: "<strong>Top Bar:</strong> Contains the account category title, side menu button (☰), search option, reports option, and computer linking option.",
+            component2: "<strong>Accounts List:</strong> Displays all your financial accounts, with the total balance for each account.",
+            component3: "<strong>Bottom Bar:</strong> Displays a summary of total debits and credits, in addition to the selected local currency.",
+            component4: "<strong>Add Button:</strong> Located in the bottom bar, used to add a new account or new financial transaction.",
+            how_to_use: "How to Use:",
+            usage1: "<strong>Navigating the Side Menu:</strong> Press the menu icon (three horizontal lines ☰) in the top right corner to access the side menu.",
+            usage2: "<strong>Search for an Account:</strong> Use the search icon in the top bar to search for specific accounts.",
+            usage3: "<strong>View Reports:</strong> To access reports, press the PDF icon in the top bar.",
+            usage4: "<strong>Add a New Account:</strong> Press the add button (+) in the bottom bar.",
+            usage5: "<strong>Add a New Transaction:</strong> Press the add button (+) in the bottom bar, then select \"Add new transaction\".",
+            usage6: "<strong>Account Details:</strong> Press any account in the list to view its details and financial transactions.",
+            main_screen_tip: "You can customize the local currency through the app settings to ensure the accuracy of financial reports.",
+            personal_data_title: "Personal Data Option",
+            personal_data_overview: "Overview of the Personal Data Screen",
+            personal_data_description: "This screen allows you to view and modify your profile information in the My Smart Wallet.",
+            personal_component1: "<strong>Icon:</strong> Choose the appropriate picture or logo for you by pressing the camera icon.",
+            personal_component2: "<strong>Full Name:</strong> Enter the appropriate name.",
+            personal_component3: "<strong>Company Name (Optional):</strong> Enter the appropriate company name.",
+            personal_component4: "<strong>Address:</strong> Enter the appropriate address.",
+            personal_component5: "<strong>Phone Number:</strong> You can add more than one phone number.",
+            personal_component6: "<strong>Email:</strong> Your email is displayed automatically.",
+            personal_component7: "<strong>Save Button:</strong> To save the new data.",
+            personal_usage1: "<strong>View Data:</strong> Simply open this screen to view and modify your information.",
+            personal_data_tip: "Make sure to update your personal information regularly to ensure data accuracy.",
+            add_operations_title: "Add Operations Screen",
+            add_operations_overview: "Overview of the Add Operations Screen",
+            add_operations_description: "This screen allows you to easily and quickly record all your financial transactions, whether income or expenses.",
+            operations_component1: "<strong>Account Name:</strong> Field to select the account on which the transaction will be performed.",
+            operations_component2: "<strong>Amount:</strong> Field to enter the transaction value.",
+            operations_component3: "<strong>Details:</strong> Field to add a brief description of the transaction.",
+            operations_component4: "<strong>Currency:</strong> Dropdown list to select the currency used in the transaction.",
+            operations_component5: "<strong>Date:</strong> Field to select the transaction date.",
+            operations_component6: "<strong>Save Transaction Type Button:</strong> Option to determine whether the transaction is income (for you) or expense (on you).",
+            operations_usage1: "<strong>Select Account:</strong> Start typing the account name, and suggestions from your existing accounts will appear. You can also add a new account directly from here.",
+            operations_usage2: "<strong>Enter Amount:</strong> Enter the amount accurately. The app supports decimal numbers.",
+            operations_usage3: "<strong>Specify Details:</strong> Write a clear description of the transaction to help you remember it later.",
+            operations_usage4: "<strong>Select Currency:</strong> Choose the appropriate currency for the transaction from the dropdown list.",
+            operations_usage5: "<strong>Select Date:</strong> Press the date field to open the date picker and select the correct date for the transaction.",
+            operations_usage6: "<strong>Determine Type:</strong> Choose whether the transaction is income or expense.",
+            operations_usage7: "<strong>Save Transaction:</strong> After entering all data, press the for you or on you button to add the transaction to the specified account.",
+            operations_tip: "You can use the details field to add additional notes about the transaction, such as the recipient's name or purpose of payment.",
+            account_details_title: "Account Details Screen",
+            account_details_overview: "Overview of the Account Details Screen",
+            account_details_description: "This screen shows all financial transactions related to a specific account, giving you a detailed view of money flow within this account.",
+            account_component1: "<strong>Account Name and Balance:</strong> Displays the account name and its current total balance at the top.",
+            account_component2: "<strong>Transactions List:</strong> Displays all income and expenses associated with this account, sorted by date.",
+            account_component3: "<strong>Transaction Details:</strong> Each transaction shows the amount, date, and description.",
+            account_component4: "<strong>Add Transaction Button:</strong> To create a new transaction directly for this account.",
+            account_usage1: "<strong>View Transactions:</strong> Scroll down to view all historical transactions for the account.",
+            account_usage2: "<strong>Add New Transaction:</strong> Press the add button (+) to add new income or expense specifically for this account.",
+            account_usage3: "<strong>Edit/Delete Transaction:</strong> Long press on any transaction for edit or delete options.",
+            account_usage4: "<strong>View Report:</strong> To access reports, press the PDF icon in the top bar. The account name and currency will be automatically determined based on the current screen.",
+            account_tip: "You can use this screen to review your monthly expenses and income for a specific account and identify spending patterns.",
+            invoice_title: "New Invoice Screen",
+            invoice_overview: "Overview of the Add New Invoice Screen",
+            invoice_description: "This screen allows you to easily and quickly record all your financial transactions, whether purchases or sales.",
+            invoice_component1: "<strong>Invoice Type:</strong> Select the invoice type, either sales or purchases.",
+            invoice_component2: "<strong>Account Name:</strong> Field to select the account on which the transaction will be performed.",
+            invoice_component3: "<strong>Date:</strong> Field to select the invoice date.",
+            invoice_component4: "<strong>Details:</strong> Field to add a brief description of the invoice.",
+            invoice_component5: "<strong>Amount:</strong> Field to enter the invoice value.",
+            invoice_component6: "<strong>Cash Amount Paid:</strong> Field to enter the amount paid in cash.",
+            invoice_component7: "<strong>Currency:</strong> Dropdown list to select the currency used in the transaction.",
+            invoice_component8: "<strong>Save Invoice Button:</strong> So that the option is automatically selected to determine whether the invoice is sales (for you) or purchases (on you).",
+            invoice_usage1: "<strong>Determine Invoice Type:</strong> Choose whether the transaction is sales or purchases.",
+            invoice_usage2: "<strong>Account Name:</strong> Start typing the account name, and suggestions from your existing accounts will appear. You can also add a new account directly from here.",
+            invoice_usage3: "<strong>Enter Amount:</strong> Enter the amount accurately. The app supports decimal numbers.",
+            invoice_usage4: "<strong>Specify Details:</strong> Write a clear description of the invoice to help you remember it later.",
+            invoice_usage5: "<strong>Select Currency:</strong> Choose the appropriate currency for the transaction from the dropdown list.",
+            invoice_usage6: "<strong>Select Date:</strong> Press the date field to open the date picker and select the correct date for the transaction.",
+            invoice_usage7: "<strong>Save Invoice:</strong> After entering all data, press the save button to the specified account.",
+            invoice_tip: "Adding an invoice is available either from the side menu on the main screen or from the account details screen.",
+            currencies_title: "Currencies Screen",
+            currencies_overview: "Overview of the Currencies Screen",
+            currencies_description: "This screen allows you to manage the currencies you use in the My Smart Wallet, including adding new currencies and specifying the local currency.",
+            currencies_component1: "<strong>Currencies List:</strong> Displays all currencies available in the app, including default currencies and currencies you've added.",
+            currencies_component2: "<strong>Add Currency Button:</strong> To add a new currency to the list.",
+            currencies_component3: "<strong>Edit Currency Button:</strong> To modify the account category name.",
+            currencies_component4: "<strong>Delete Currency Button:</strong> To modify the account category name.",
+            currencies_component5: "<strong>Local Currency:</strong> The local currency that was automatically determined based on your geographical location when you first logged in is highlighted.",
+            currencies_usage1: "<strong>Add New Currency:</strong> Press the add button (+) in the bottom right corner, then enter the currency name.",
+            currencies_usage2: "<strong>Edit Currency:</strong> Press the pen button for any currency in the list to edit its name.",
+            currencies_usage3: "<strong>Delete Currency:</strong> When pressing the delete currency button to delete it (cannot delete default currencies or those containing transactions).",
+            currencies_usage4: "<strong>Specify Local Currency:</strong> You can manually change the default local currency from this screen if necessary.",
+            currencies_tip: "Make sure the local currency is correctly specified to ensure the accuracy of financial reports and statistics.",
+            account_categories_title: "Account Categories Screen",
+            account_categories_overview: "Overview of the Account Categories Screen",
+            account_categories_description: "This screen helps you organize your financial accounts by categorizing them into different types (e.g., bank, cash, credit card, etc.), making it easier to track your money.",
+            categories_component1: "<strong>Categories List:</strong> Displays all available account types.",
+            categories_component2: "<strong>Add Category Button:</strong> To add a new account type.",
+            categories_component3: "<strong>Edit Category Button:</strong> To modify the account category name.",
+            categories_component4: "<strong>Delete Category Button:</strong> To modify the account category name.",
+            categories_usage1: "<strong>Add New Category:</strong> Press the add button (+) in the bottom right corner, then enter the category name.",
+            categories_usage2: "<strong>Edit Category:</strong> Press any category in the list to edit its name.",
+            categories_usage3: "<strong>Delete Category:</strong> When pressing the delete category button to delete it (cannot delete default categories or those containing accounts).",
+            categories_tip: "Use clear and specific categories to facilitate managing your accounts and searching for them later.",
+            import_title: "Data Import Option",
+            import_overview: "Overview of the Data Import Screen",
+            import_description: "This screen allows you to import your financial data from external sources into the My Smart Wallet, making it easier to transfer your financial records.",
+            import_component1: "<strong>Select File Button:</strong> To select the data file you want to import.",
+            import_component2: "<strong>Import Button:</strong> To start the data import process.",
+            import_component3: "<strong>Import Status:</strong> Shows the progress of the import process and any potential errors.",
+            import_usage1: "<strong>Select File:</strong> Press the select file button to choose the data file (usually a db file) from your device.",
+            import_usage2: "<strong>Start Import:</strong> After selecting the file, press the import button to start the process.",
+            import_usage3: "<strong>Review Status:</strong> Monitor the import status to ensure it completes successfully.",
+            import_usage4: "<strong>Note:</strong> If you have a backup for a specific application that is not compatible with the import and you want to import it to the application, contact the developer.",
+            import_tip: "Make sure the data file format complies with the specific requirements of the application to avoid import errors.",
+            reports_title: "Reports Screen",
+            reports_overview: "Overview of the Reports Screen",
+            reports_description: "The reports screen provides you with a comprehensive view of your financial situation through charts and detailed reports on your income and expenses.",
+            reports_component1: "<strong>Tabular Reports:</strong> Provide detailed reports in table form, which can be filtered and exported.",
+            reports_component2: "<strong>Filter Options:</strong> Allow you to filter reports by date, account, or transaction type.",
+            reports_usage1: "<strong>Select Report Type:</strong> Choose the type of report you want to view (e.g., income report, expense report, comprehensive report).",
+            reports_usage2: "<strong>Specify Time Period:</strong> Specify the time period for the report (daily, weekly, monthly, yearly, or custom).",
+            reports_usage3: "<strong>Filter Data:</strong> Use filter options to view data for specific accounts or transaction types.",
+            reports_usage4: "<strong>Export Report:</strong> You can export reports to PDF files to share or analyze outside the application.",
+            reports_tip: "Use reports regularly to monitor your financial health and make informed decisions.",
+            sync_title: "Real-time Sync for Two Devices",
+            sync_overview: "Overview of Real-time Data Sync",
+            sync_description: "This feature provides you with the ability to use more than one phone. This feature enables you to add, modify, or delete transactions on one phone, and the changes will appear directly on the other device.",
+            sync_usage1: "<strong>Note: </strong> With this feature, you can use only two devices, and if you wish to increase the number of authorized devices, contact the developer",
+            sync_usage2: "<strong>First Step:</strong> Install the My Smart Wallet on the other phone.",
+            sync_usage3: "<strong>Second Step:</strong> Log in with the same email address that you used on the previous phone.",
+            sync_usage4: "<strong>Note: </strong> It must be the same email address used on the previous phone.",
+            sync_usage5: "<strong>Final Step:</strong> After logging in, synchronization will occur automatically and fetch the account data and display it on the new phone.",
+            sync_tip: "You can at any time delete one device and add another directly from the application without referring to the developer.",
+            free_plan_title: "Free Plan and Rewards",
+            free_plan_description: "When you first register, you get a free package that allows you to add 100 financial transactions. After consuming this package, you can continue using the app through the following ways:",
+            free_plan1: "<b>Daily quota:</b> You will automatically get 3 free transactions every day.",
+            free_plan2: "<b>Watch an ad:</b> From the side menu, watch an ad and get 3 additional transactions added to your balance.",
+            free_plan3: "<b>Invite friends:</b> Share the app with your friends and get generous rewards and permanent subscription to the app.",
+            referral_title: "How does inviting friends work?",
+            referral_description: "The referral system rewards both you and your friend!",
+            referral1: "<strong>You (Referrer):</strong> Go to the side menu and choose \"Invite a friend\" and send your referral link. For every friend who registers through your link, you will get 5 transactions as a reward and get 10 additional transactions for every 5 people who registered through your referral link.",
+            referral2: "<strong>Major reward for the referrer:</strong> When 5 people from those who registered using your link subscribe to the full version, you will get a free subscription to the full version.",
+            referral3: "<strong>Your friend (Referred):</strong> When your friend registers through your link, they will get 3 additional transactions on top of their free package as a welcome gift.",
+            referral_note: "You can always track your reward balance from the side menu.",
+            referral_tip: "Take advantage of friend invitations by sharing your Invite link in groups and forums to earn additional features.",
+            purchase_title: "Purchase the Full Version",
+            purchase_description: "To get an unlimited number of transactions and remove all restrictions, you can purchase the full version of the app:",
+            purchase1: "From the side menu (after your package expires), choose \"Purchase the app\".",
+            purchase2: "A unique purchase code linked to your account will appear.",
+            purchase3: "Copy this code and send it to us via WhatsApp to guide you through the payment steps and activate your account instantly.",
+            purchase4: "The license allows you to use the app on two devices with the same account.",
+            purch_tip: "The full version has been priced at a small amount to cover Google's monthly platform fees for providing the app's professional features, so please don't hesitate to purchase and support the app.",
+            tip_note:"Note: ",
+            contact_title: "Contact and Support Screen",
+            contact_overview: "Overview of the Contact and Support Screen",
+            contact_description: "This screen allows you to communicate with the My Smart Wallet support team for help or to provide feedback.",
+            contact_component1: "<strong>Contact Information:</strong> Displays phone numbers, email, and social media links.",
+            contact_component2: "<strong>Contact Form:</strong> To submit an inquiry or comment directly from within the app.",
+            contact_usage1: "<strong>Direct Contact:</strong> Press phone numbers or email addresses to contact directly.",
+            contact_usage2: "<strong>Send a Message:</strong> Fill out the contact form with the required information and press send.",
+            contact_tip: "Do not hesitate to contact us for any inquiry or suggestion to improve the app. Your feedback is very valuable to us."
+        },
+        es: {
+            app_title: "Descripción general de la aplicación My Smart Wallet",
+            app_description: "Una guía completa para usar todas las funciones de la aplicación de manera fácil y efectiva",
+            features_title: "Características principales de la aplicación",
+            features_overview: "Descripción general de las características",
+            features_description: "La aplicación está cuidadosamente diseñada para adaptarse a todos los interesados ​​en registrar todos sus movimientos financieros, ya sean acreedores o deudores.",
+            main_features: "Detalles principales:",
+            feature1: "Características clave que cambiarán la forma en que administra sus cuentas",
+            feature2: "📌 La característica más importante: los usuarios pueden usar la aplicación en dos dispositivos con la misma cuenta, por lo que cualquier transacción agregada en un dispositivo aparece automáticamente en el otro dispositivo al instante",
+            feature3: "✅ Alta facilidad de uso: una interfaz simple e inteligente que le permite registrar cualquier transacción financiera en segundos.",
+            feature4: "📊 Gestión integral de cuentas: Cree un archivo para cada cliente, proveedor o cuenta personal y realice un seguimiento de todas sus transacciones con precisión.",
+            feature5: "💵 Soporte multi-moneda: Administre sus cuentas en su moneda local y cualquier otra moneda que agregue usted mismo.",
+            feature6: "📄 Informes PDF profesionales: Con un clic, cree estados de cuenta e informes financieros, tanto resumidos como detallados, y compártalos directamente con sus clientes a través de WhatsApp o cualquier otra aplicación.",
+            feature7: "💻 Vinculación con computadora: Conecte la aplicación a su laptop y navegue por los informes cómodamente. Asegúrese de que el teléfono y la laptop estén conectados a la misma red wifi.",
+            feature8: "☁️ Sincronización segura en la nube: ¡No necesita copias de seguridad! ¡Sus datos están completamente seguros! Se sincroniza automáticamente con su cuenta de Google.",
+            feature9: "🔒 Seguridad y protección: Mantenga la confidencialidad de sus datos financieros bloqueando la aplicación con una contraseña o huella digital.",
+            feature10: "🌐 Funciona sin conexión: No se preocupe por la conexión. Puede registrar y navegar por todas sus transacciones en cualquier momento, y la sincronización se realizará automáticamente cuando haya red disponible.",
+            feature11: "🔄 Importación de datos: ¿Tiene datos en aplicaciones antiguas o copias de seguridad? Puede importarlos fácilmente y continuar su trabajo sin interrupciones.",
+            feature12: "🧾 Sistema de facturación integrado: Cree facturas de venta y compra profesionales, y realice un seguimiento fácil de los montos pagados y pendientes.",
+            tip: "Consejo:",
+            tip_content: "No dude en utilizar la aplicación ya que se basa en los más altos niveles de seguridad y cifrado recomendados por Google.",
+            main_screen_title: "Pantalla Principal",
+            main_screen_overview: "Descripción general de la Pantalla Principal",
+            main_screen_description: "La pantalla principal es el panel de control principal de la aplicación My Smart Wallet, donde puede administrar todas sus cuentas y transacciones financieras. Esta pantalla proporciona una descripción general rápida de su estado financiero y le brinda acceso rápido a las funciones básicas.",
+            main_components: "Componentes principales:",
+            component1: "<strong>Barra superior:</strong> Contiene el título de la categoría de cuenta, el botón del menú lateral (☰), la opción de búsqueda, la opción de informes y la opción de vinculación con computadora.",
+            component2: "<strong>Lista de cuentas:</strong> Muestra todas sus cuentas financieras, con el saldo total de cada cuenta.",
+            component3: "<strong>Barra inferior:</strong> Muestra un resumen de los débitos y créditos totales, además de la moneda local seleccionada.",
+            component4: "<strong>Botón Agregar:</strong> Ubicado en la barra inferior, se utiliza para agregar una nueva cuenta o nueva transacción financiera.",
+            how_to_use: "Cómo usar:",
+            usage1: "<strong>Navegar por el menú lateral:</strong> Presione el icono de menú (tres líneas horizontales ☰) en la esquina superior derecha para acceder al menú lateral.",
+            usage2: "<strong>Buscar una cuenta:</strong> Use el icono de búsqueda en la barra superior para buscar cuentas específicas.",
+            usage3: "<strong>Ver informes:</strong> Para acceder a los informes, presione el icono PDF en la barra superior.",
+            usage4: "<strong>Agregar una nueva cuenta:</strong> Presione el botón agregar (+) en la barra inferior.",
+            usage5: "<strong>Agregar una nueva transacción:</strong> Presione el botón agregar (+) en la barra inferior, luego seleccione \"Agregar nueva transacción\".",
+            usage6: "<strong>Detalles de la cuenta:</strong> Presione cualquier cuenta en la lista para ver sus detalles y transacciones financieras.",
+            main_screen_tip: "Puede personalizar la moneda local a través de la configuración de la aplicación para garantizar la precisión de los informes financieros.",
+            personal_data_title: "Opción de Datos Personales",
+            personal_data_overview: "Descripción general de la pantalla de datos personales",
+            personal_data_description: "Esta pantalla le permite ver y modificar la información de su perfil en la aplicación My Smart Wallet.",
+            personal_component1: "<strong>Icono:</strong> Elija la imagen o logotipo apropiado para usted presionando el icono de la cámara.",
+            personal_component2: "<strong>Nombre completo:</strong> Ingrese el nombre apropiado.",
+            personal_component3: "<strong>Nombre de la empresa (Opcional):</strong> Ingrese el nombre de la empresa apropiado.",
+            personal_component4: "<strong>Dirección:</strong> Ingrese la dirección apropiada.",
+            personal_component5: "<strong>Número de teléfono:</strong> Puede agregar más de un número de teléfono.",
+            personal_component6: "<strong>Correo electrónico:</strong> Su correo electrónico se muestra automáticamente.",
+            personal_component7: "<strong>Botón Guardar:</strong> Para guardar los nuevos datos.",
+            personal_usage1: "<strong>Ver datos:</strong> Simplemente abra esta pantalla para ver y modificar su información.",
+            personal_data_tip: "Asegúrese de actualizar su información personal regularmente para garantizar la precisión de los datos.",
+            add_operations_title: "Pantalla de Agregar Operaciones",
+            add_operations_overview: "Descripción general de la Pantalla de Agregar Operaciones",
+            add_operations_description: "Esta pantalla le permite registrar fácil y rápidamente todas sus transacciones financieras, ya sean ingresos o gastos.",
+            operations_component1: "<strong>Nombre de la cuenta:</strong> Campo para seleccionar la cuenta en la que se realizará la transacción.",
+            operations_component2: "<strong>Monto:</strong> Campo para ingresar el valor de la transacción.",
+            operations_component3: "<strong>Detalles:</strong> Campo para agregar una descripción breve de la transacción.",
+            operations_component4: "<strong>Moneda:</strong> Lista desplegable para seleccionar la moneda utilizada en la transacción.",
+            operations_component5: "<strong>Fecha:</strong> Campo para seleccionar la fecha de la transacción.",
+            operations_component6: "<strong>Botón Guardar tipo de transacción:</strong> Opción para determinar si la transacción es ingreso (para usted) o gasto (sobre usted).",
+            operations_usage1: "<strong>Seleccionar cuenta:</strong> Comience a escribir el nombre de la cuenta y aparecerán sugerencias de sus cuentas existentes. También puede agregar una nueva cuenta directamente desde aquí.",
+            operations_usage2: "<strong>Ingresar monto:</strong> Ingrese el monto con precisión. La aplicación admite números decimales.",
+            operations_usage3: "<strong>Especificar detalles:</strong> Escriba una descripción clara de la transacción para ayudarle a recordarla más tarde.",
+            operations_usage4: "<strong>Seleccionar moneda:</strong> Elija la moneda apropiada para la transacción de la lista desplegable.",
+            operations_usage5: "<strong>Seleccionar fecha:</strong> Presione el campo de fecha para abrir el selector de fecha y seleccionar la fecha correcta para la transacción.",
+            operations_usage6: "<strong>Determinar tipo:</strong> Elija si la transacción es ingreso o gasto.",
+            operations_usage7: "<strong>Guardar transacción:</strong> Después de ingresar todos los datos, presione el botón para usted o sobre usted para agregar la transacción a la cuenta especificada.",
+            operations_tip: "Puede usar el campo de detalles para agregar notas adicionales sobre la transacción, como el nombre del destinatario o el propósito del pago.",
+            account_details_title: "Pantalla de Detalles de la Cuenta",
+            account_details_overview: "Descripción general de la Pantalla de Detalles de la Cuenta",
+            account_details_description: "Esta pantalla muestra todas las transacciones financieras relacionadas con una cuenta específica, brindándole una vista detallada del flujo de dinero dentro de esta cuenta.",
+            account_component1: "<strong>Nombre de la cuenta y saldo:</strong> Muestra el nombre de la cuenta y su saldo total actual en la parte superior.",
+            account_component2: "<strong>Lista de transacciones:</strong> Muestra todos los ingresos y gastos asociados con esta cuenta, ordenados por fecha.",
+            account_component3: "<strong>Detalles de la transacción:</strong> Cada transacción muestra el monto, la fecha y la descripción.",
+            account_component4: "<strong>Botón Agregar transacción:</strong> Para crear una nueva transacción directamente para esta cuenta.",
+            account_usage1: "<strong>Ver transacciones:</strong> Desplácese hacia abajo para ver todas las transacciones históricas de la cuenta.",
+            account_usage2: "<strong>Agregar nueva transacción:</strong> Presione el botón agregar (+) para agregar nuevos ingresos o gastos específicamente para esta cuenta.",
+            account_usage3: "<strong>Editar/Eliminar transacción:</strong> Mantenga presionada cualquier transacción para ver las opciones de edición o eliminación.",
+            account_usage4: "<strong>Ver informe:</strong> Para acceder a los informes, presione el icono PDF en la barra superior. El nombre de la cuenta y la moneda se determinarán automáticamente según la pantalla actual.",
+            account_tip: "Puede usar esta pantalla para revisar sus gastos e ingresos mensuales para una cuenta específica e identificar patrones de gasto.",
+            invoice_title: "Pantalla de Nueva Factura",
+            invoice_overview: "Descripción general de la Pantalla de Agregar Nueva Factura",
+            invoice_description: "Esta pantalla le permite registrar fácil y rápidamente todas sus transacciones financieras, ya sean compras o ventas.",
+            invoice_component1: "<strong>Tipo de factura:</strong> Seleccione el tipo de factura, ya sea ventas o compras.",
+            invoice_component2: "<strong>Nombre de la cuenta:</strong> Campo para seleccionar la cuenta en la que se realizará la transacción.",
+            invoice_component3: "<strong>Fecha:</strong> Campo para seleccionar la fecha de la factura.",
+            invoice_component4: "<strong>Detalles:</strong> Campo para agregar una descripción breve de la factura.",
+            invoice_component5: "<strong>Monto:</strong> Campo para ingresar el valor de la factura.",
+            invoice_component6: "<strong>Monto pagado en efectivo:</strong> Campo para ingresar el monto pagado en efectivo.",
+            invoice_component7: "<strong>Moneda:</strong> Lista desplegable para seleccionar la moneda utilizada en la transacción.",
+            invoice_component8: "<strong>Botón Guardar factura:</strong> Para que la opción se seleccione automáticamente para determinar si la factura es ventas (para usted) o compras (sobre usted).",
+            invoice_usage1: "<strong>Determinar tipo de factura:</strong> Elija si la transacción es ventas o compras.",
+            invoice_usage2: "<strong>Nombre de la cuenta:</strong> Comience a escribir el nombre de la cuenta y aparecerán sugerencias de sus cuentas existentes. También puede agregar una nueva cuenta directamente desde aquí.",
+            invoice_usage3: "<strong>Ingresar monto:</strong> Ingrese el monto con precisión. La aplicación admite números decimales.",
+            invoice_usage4: "<strong>Especificar detalles:</strong> Escriba una descripción clara de la factura para ayudarle a recordarla más tarde.",
+            invoice_usage5: "<strong>Seleccionar moneda:</strong> Elija la moneda apropiada para la transacción de la lista desplegable.",
+            invoice_usage6: "<strong>Seleccionar fecha:</strong> Presione el campo de fecha para abrir el selector de fecha y seleccionar la fecha correcta para la transacción.",
+            invoice_usage7: "<strong>Guardar factura:</strong> Después de ingresar todos los datos, presione el botón guardar en la cuenta especificada.",
+            invoice_tip: "Agregar una factura está disponible desde el menú lateral en la pantalla principal o desde la pantalla de detalles de la cuenta.",
+            currencies_title: "Pantalla de Monedas",
+            currencies_overview: "Descripción general de la Pantalla de Monedas",
+            currencies_description: "Esta pantalla le permite administrar las monedas que utiliza en la aplicación My Smart Wallet, incluida la adición de nuevas monedas y la especificación de la moneda local.",
+            currencies_component1: "<strong>Lista de monedas:</strong> Muestra todas las monedas disponibles en la aplicación, incluidas las monedas predeterminadas y las monedas que ha agregado.",
+            currencies_component2: "<strong>Botón Agregar moneda:</strong> Para agregar una nueva moneda a la lista.",
+            currencies_component3: "<strong>Botón Editar moneda:</strong> Para modificar el nombre de la categoría de cuenta.",
+            currencies_component4: "<strong>Botón Eliminar moneda:</strong> Para modificar el nombre de la categoría de cuenta.",
+            currencies_component5: "<strong>Moneda local:</strong> La moneda local que se determinó automáticamente según su ubicación geográfica cuando inició sesión por primera vez está resaltada.",
+            currencies_usage1: "<strong>Agregar nueva moneda:</strong> Presione el botón agregar (+) en la esquina inferior derecha, luego ingrese el nombre de la moneda.",
+            currencies_usage2: "<strong>Editar moneda:</strong> Presione el botón de lápiz para cualquier moneda en la lista para editar su nombre.",
+            currencies_usage3: "<strong>Eliminar moneda:</strong> Al presionar el botón eliminar moneda para eliminarla (no se pueden eliminar las monedas predeterminadas o aquellas que contienen transacciones).",
+            currencies_usage4: "<strong>Especificar moneda local:</strong> Puede cambiar manualmente la moneda local predeterminada desde esta pantalla si es necesario.",
+            currencies_tip: "Asegúrese de que la moneda local esté correctamente especificada para garantizar la precisión de los informes y estadísticas financieras.",
+            account_categories_title: "Pantalla de Categorías de Cuentas",
+            account_categories_overview: "Descripción general de la Pantalla de Categorías de Cuentas",
+            account_categories_description: "Esta pantalla le ayuda a organizar sus cuentas financieras categorizándolas en diferentes tipos (por ejemplo, banco, efectivo, tarjeta de crédito, etc.), lo que facilita el seguimiento de su dinero.",
+            categories_component1: "<strong>Lista de categorías:</strong> Muestra todos los tipos de cuentas disponibles.",
+            categories_component2: "<strong>Botón Agregar categoría:</strong> Para agregar un nuevo tipo de cuenta.",
+            categories_component3: "<strong>Botón Editar categoría:</strong> Para modificar el nombre de la categoría de cuenta.",
+            categories_component4: "<strong>Botón Eliminar categoría:</strong> Para modificar el nombre de la categoría de cuenta.",
+            categories_usage1: "<strong>Agregar nueva categoría:</strong> Presione el botón agregar (+) en la esquina inferior derecha, luego ingrese el nombre de la categoría.",
+            categories_usage2: "<strong>Editar categoría:</strong> Presione cualquier categoría en la lista para editar su nombre.",
+            categories_usage3: "<strong>Eliminar categoría:</strong> Al presionar el botón eliminar categoría para eliminarla (no se pueden eliminar las categorías predeterminadas o aquellas que contienen cuentas).",
+            categories_tip: "Utilice categorías claras y específicas para facilitar la gestión de sus cuentas y buscarlas posteriormente.",
+            import_title: "Opción de Importación de Datos",
+            import_overview: "Descripción general de la Pantalla de Importación de Datos",
+            import_description: "Esta pantalla le permite importar sus datos financieros de fuentes externas a la aplicación My Smart Wallet, lo que facilita la transferencia de sus registros financieros.",
+            import_component1: "<strong>Botón Seleccionar archivo:</strong> Para seleccionar el archivo de datos que desea importar.",
+            import_component2: "<strong>Botón Importar:</strong> Para iniciar el proceso de importación de datos.",
+            import_component3: "<strong>Estado de importación:</strong> Muestra el progreso del proceso de importación y cualquier error potencial.",
+            import_usage1: "<strong>Seleccionar archivo:</strong> Presione el botón seleccionar archivo para elegir el archivo de datos (generalmente un archivo db) desde su dispositivo.",
+            import_usage2: "<strong>Iniciar importación:</strong> Después de seleccionar el archivo, presione el botón importar para iniciar el proceso.",
+            import_usage3: "<strong>Revisar estado:</strong> Supervise el estado de importación para asegurarse de que se complete con éxito.",
+            import_usage4: "<strong>Nota:</strong> En caso de que tenga una copia de seguridad para una aplicación específica que no sea compatible con la importación y desee importarla a la aplicación, contacte al desarrollador.",
+            import_tip: "Asegúrese de que el formato del archivo de datos cumpla con los requisitos específicos de la aplicación para evitar errores de importación.",
+            reports_title: "Pantalla de Informes",
+            reports_overview: "Descripción general de la Pantalla de Informes",
+            reports_description: "La pantalla de informes le proporciona una vista completa de su situación financiera a través de gráficos e informes detallados sobre sus ingresos y gastos.",
+            reports_component1: "<strong>Informes tabulares:</strong> Proporcionan informes detallados en forma de tablas, que pueden filtrarse y exportarse.",
+            reports_component2: "<strong>Opciones de filtro:</strong> Le permiten filtrar informes por fecha, cuenta o tipo de transacción.",
+            reports_usage1: "<strong>Seleccionar tipo de informe:</strong> Elija el tipo de informe que desea ver (por ejemplo, informe de ingresos, informe de gastos, informe integral).",
+            reports_usage2: "<strong>Especificar período de tiempo:</strong> Especifique el período de tiempo para el informe (diario, semanal, mensual, anual o personalizado).",
+            reports_usage3: "<strong>Filtrar datos:</strong> Utilice las opciones de filtro para ver datos de cuentas específicas o tipos de transacciones.",
+            reports_usage4: "<strong>Exportar informe:</strong> Puede exportar informes a archivos PDF para compartirlos o analizarlos fuera de la aplicación.",
+            reports_tip: "Utilice informes regularmente para monitorear su salud financiera y tomar decisiones informadas.",
+            sync_title: "Sincronización en Tiempo Real para Dos Dispositivos",
+            sync_overview: "Descripción general de la Sincronización de Datos en Tiempo Real",
+            sync_description: "Esta característica le proporciona la capacidad de usar más de un teléfono. Esta característica le permite agregar, modificar o eliminar transacciones en un teléfono, y los cambios aparecerán directamente en el otro dispositivo.",
+            sync_usage1: "<strong>Nota: </strong> Con esta característica, puede usar solo dos dispositivos, y si desea aumentar la cantidad de dispositivos autorizados, contacte al desarrollador",
+            sync_usage2: "<strong>Primer paso:</strong> Instale la aplicación My Smart Wallet en el otro teléfono.",
+            sync_usage3: "<strong>Segundo paso:</strong> Inicie sesión con la misma dirección de correo electrónico que utilizó en el teléfono anterior.",
+            sync_usage4: "<strong>Nota: </strong> Debe ser la misma dirección de correo electrónico utilizada en el teléfono anterior.",
+            sync_usage5: "<strong>Paso final:</strong> Después de iniciar sesión, la sincronización se realizará automáticamente y recuperará los datos de la cuenta y los mostrará en el nuevo teléfono.",
+            sync_tip: "Puede en cualquier momento eliminar un dispositivo y agregar otro directamente desde la aplicación sin consultar al desarrollador.",
+            free_plan_title: "Plan Gratuito y Recompensas",
+            free_plan_description: "Cuando se registra por primera vez, obtiene un paquete gratuito que le permite agregar 100 transacciones financieras. Después de consumir este paquete, puede continuar usando la aplicación a través de las siguientes formas:",
+            free_plan1: "<b>Cuota diaria:</b> Obtendrá automáticamente 3 transacciones gratuitas todos los días.",
+            free_plan2: "<b>Ver un anuncio:</b> Desde el menú lateral, vea un anuncio y obtenga 3 transacciones adicionales agregadas a su saldo.",
+            free_plan3: "<b>Invitar amigos:</b> Comparta la aplicación con sus amigos y obtenga recompensas generosas y suscripción permanente a la aplicación.",
+            referral_title: "¿Cómo funciona la invitación de amigos?",
+            referral_description: "¡El sistema de referencias recompensa tanto a usted como a su amigo!",
+            referral1: "<strong>Usted (Referidor):</strong> Vaya al menú lateral y elija \"Invitar a un amigo\" y envíe su enlace de referencia. Por cada amigo que se registre a través de su enlace, obtendrá 5 transacciones como recompensa y obtendrá 10 transacciones adicionales por cada 5 personas que se registraron through su enlace de referencia.",
+            referral2: "<strong>Recompensa mayor para el referidor:</strong> Cuando 5 personas de aquellas que se registraron using su enlace se suscriban a la versión completa, obtendrá una suscripción gratuita a la versión completa.",
+            referral3: "<strong>Su amigo (Referido):</strong> Cuando su amigo se registre a través de su enlace, obtendrá 3 transacciones adicionales además de su paquete gratuito como regalo de bienvenida.",
+            referral_note: "Siempre puede realizar un seguimiento de su saldo de recompensas desde el menú lateral.",
+            referral_tip: "Aproveche las invitaciones de amigos compartiendo su enlace en grupos y foros para ganar funciones adicionales.",
+            purchase_title: "Comprar la Versión Completa",
+            purchase_description: "Para obtener un número ilimitado de transacciones y eliminar todas las restricciones, puede comprar la versión completa de la aplicación:",
+            purchase1: "Desde el menú lateral (después de que expire su paquete), elija \"Comprar la aplicación\".",
+            purchase2: "Aparecerá un código de compra único vinculado a su cuenta.",
+            purchase3: "Copie este código y envíenoslo por WhatsApp para guiarle through los pasos de pago y activar su cuenta al instante.",
+            purchase4: "La licencia le permite usar la aplicación en dos dispositivos con la misma cuenta.",
+            purch_tip: " La versión completa tiene un costo simbólico para cubrir las tarifas mensuales de la plataforma de Google y así ofrecer las funciones profesionales de la aplicación, así que no dudes en comprarla para apoyar la app.",
+            tip_note:"Nota: ",
+            contact_title: "Pantalla de Contacto y Soporte",
+            contact_overview: "Descripción general de la Pantalla de Contacto y Soporte",
+            contact_description: "Esta pantalla le permite comunicarse con el equipo de soporte de la aplicación My Smart Wallet para obtener ayuda o proporcionar comentarios.",
+            contact_component1: "<strong>Información de contacto:</strong> Muestra números de teléfono, correo electrónico y enlaces de redes sociales.",
+            contact_component2: "<strong>Formulario de contacto:</strong> Para enviar una consulta o comentario directamente desde dentro de la aplicación.",
+            contact_usage1: "<strong>Contacto directo:</strong> Presione números de teléfono o direcciones de correo electrónico para contactar directamente.",
+            contact_usage2: "<strong>Enviar un mensaje:</strong> Complete el formulario de contacto con la información requerida y presione enviar.",
+            contact_tip: "No dude en contactarnos para cualquier consulta o sugerencia para mejorar la aplicación. Sus comentarios son muy valiosos para nosotros."
+        },
+        fr: {
+        app_title: "Aperçu de l'application Carnet de  My Smart Wallet",
+app_description: "Guide complet pour utiliser toutes les fonctionnalités de l'application facilement et efficacement",
+features_title: "Principales fonctionnalités de l'application",
+features_overview: "Aperçu des fonctionnalités de l'application",
+features_description: "L'application a été conçue avec soin pour convenir à toute personne souhaitant enregistrer toutes ses opérations financières, que ce soit en tant que créancier ou débiteur.",
+main_features: "Détails principaux :",
+feature1: "Fonctionnalités clés qui changeront votre manière de gérer vos comptes",
+feature2: "📌 Fonctionnalité principale : l'utilisateur peut utiliser l'application sur deux appareils avec le même compte, et toute opération ajoutée sur l'un apparaît automatiquement sur l'autre instantanément",
+feature3: "✅ Simplicité exceptionnelle : interface simple et intelligente permettant d'enregistrer toute opération financière en quelques secondes.",
+feature4: "📊 Gestion complète des comptes : créez un profil pour chaque client, fournisseur ou compte personnel et suivez toutes ses transactions avec précision.",
+feature5: "💵 Support multi-devises : gérez vos comptes dans votre devise locale ou toute autre devise ajoutée.",
+feature6: "📄 Rapports PDF professionnels : en un clic, générez des relevés de compte et des rapports financiers détaillés ou consolidés, et partagez-les directement avec vos clients via WhatsApp ou toute autre application.",
+feature7: "💻 Connexion à l'ordinateur : connectez l'application à votre ordinateur portable pour consulter les rapports facilement. Assurez-vous que le téléphone et l'ordinateur sont sur le même réseau Wi-Fi.",
+feature8: "☁️ Synchronisation cloud sécurisée : aucune sauvegarde nécessaire, vos données sont totalement sécurisées ! Elles se synchronisent automatiquement avec votre compte Google.",
+feature9: "🔒 Sécurité et protection : protégez vos données financières via un mot de passe ou l'empreinte digitale.",
+feature10: "🌐 Fonctionne hors ligne : pas de souci pour la connexion. Vous pouvez enregistrer et consulter toutes vos opérations à tout moment, la synchronisation se fera automatiquement dès que le réseau est disponible.",
+feature11: "🔄 Importation de données : vous avez des données dans des anciennes applications ou des sauvegardes ? Vous pouvez les importer facilement et continuer votre travail sans interruption.",
+feature12: "🧾 Système de facturation complet : créez des factures de ventes et d'achats professionnelles, et suivez facilement les montants payés et restants.",
+tip: "Conseil :",
+tip_content: "N'hésitez pas à utiliser l'application, elle repose sur les plus hauts niveaux de sécurité et de cryptage recommandés par Google.",
+main_screen_title: "Écran principal",
+main_screen_overview: "Aperçu de l'écran principal",
+main_screen_description: "L'écran principal est le tableau de bord de l'application Carnet de  My Smart Wallet, vous permettant de gérer tous vos comptes et opérations financières. Il offre un aperçu rapide de votre situation financière et un accès rapide aux fonctionnalités clés.",
+main_components: "Composants principaux :",
+component1: "<strong>Barre supérieure :</strong> contient le titre du compte, le bouton du menu latéral (☰), l'option de recherche, l'option rapports et la connexion à l'ordinateur.",
+component2: "<strong>Liste des comptes :</strong> affiche tous vos comptes financiers avec le solde total de chaque compte.",
+component3: "<strong>Barre inférieure :</strong> affiche un résumé des montants débiteurs et créditeurs, ainsi que la devise locale sélectionnée.",
+component4: "<strong>Bouton d'ajout :</strong> situé dans la barre inférieure, utilisé pour ajouter un nouveau compte ou une nouvelle opération financière.",
+how_to_use: "Comment utiliser :",
+usage1: "<strong>Navigation dans le menu latéral :</strong> appuyez sur l'icône du menu (trois lignes horizontales ☰) en haut à droite pour accéder au menu latéral.",
+usage2: "<strong>Rechercher un compte :</strong> utilisez l'icône de recherche dans la barre supérieure pour rechercher des comptes spécifiques.",
+usage3: "<strong>Afficher les rapports :</strong> pour accéder aux rapports, appuyez sur l'icône PDF dans la barre supérieure.",
+usage4: "<strong>Ajouter un nouveau compte :</strong> appuyez sur le bouton d'ajout (+) dans la barre inférieure.",
+usage5: "<strong>Ajouter une nouvelle opération :</strong> appuyez sur le bouton d'ajout (+) dans la barre inférieure, puis choisissez \"Ajouter une nouvelle opération\".",
+usage6: "<strong>Détails du compte :</strong> appuyez sur n'importe quel compte dans la liste pour afficher ses détails et ses opérations financières.",
+main_screen_tip: "Vous pouvez personnaliser la devise locale dans les paramètres de l'application pour garantir la précision des rapports.",
+personal_data_title: "Option données personnelles",
+personal_data_overview: "Aperçu de l'écran des données personnelles",
+personal_data_description: "Cet écran vous permet d'afficher et de modifier les informations de votre profil dans l'application Carnet de  My Smart Wallet.",
+personal_component1: "<strong>Icône :</strong> choisissez une image ou un logo approprié en appuyant sur l'icône de la caméra.",
+personal_component2: "<strong>Nom complet :</strong> saisissez le nom approprié.",
+personal_component3: "<strong>Nom de l'entreprise (facultatif) :</strong> saisissez le nom de votre entreprise.",
+personal_component4: "<strong>Adresse :</strong> saisissez l'adresse appropriée.",
+personal_component5: "<strong>Numéro de téléphone :</strong> vous pouvez ajouter plusieurs numéros de téléphone.",
+personal_component6: "<strong>Email :</strong> votre email est affiché automatiquement.",
+personal_component7: "<strong>Bouton enregistrer :</strong> pour sauvegarder les nouvelles données.",
+personal_usage1: "<strong>Afficher les données :</strong> ouvrez simplement cet écran pour consulter et modifier vos informations.",
+personal_data_tip: "Assurez-vous de mettre à jour vos informations personnelles régulièrement pour garantir la précision des données.",
+
+add_operations_title: "Écran d'ajout d'opérations",
+add_operations_overview: "Aperçu de l'écran d'ajout d'opérations",
+add_operations_description: "Cet écran vous permet d'enregistrer toutes vos transactions financières facilement et rapidement, qu'il s'agisse de revenus ou de dépenses.",
+operations_component1: "<strong>Nom du compte :</strong> champ pour sélectionner le compte sur lequel l'opération sera effectuée.",
+operations_component2: "<strong>Montant :</strong> champ pour saisir la valeur de l'opération.",
+operations_component3: "<strong>Détails :</strong> champ pour ajouter une brève description de l'opération.",
+operations_component4: "<strong>Devise :</strong> liste déroulante pour sélectionner la devise utilisée pour l'opération.",
+operations_component5: "<strong>Date :</strong> champ pour sélectionner la date de l'opération.",
+operations_component6: "<strong>Bouton sauvegarder le type d'opération :</strong> option pour définir si l'opération est un revenu (pour vous) ou une dépense (pour vous).",
+operations_usage1: "<strong>Choisir le compte :</strong> commencez à taper le nom du compte, des suggestions apparaîtront depuis vos comptes existants. Vous pouvez également ajouter un compte directement depuis cet écran.",
+operations_usage2: "<strong>Saisir le montant :</strong> saisissez le montant avec précision. L'application supporte les décimales.",
+operations_usage3: "<strong>Définir les détails :</strong> rédigez une description claire de l'opération pour vous en souvenir plus tard.",
+operations_usage4: "<strong>Choisir la devise :</strong> sélectionnez la devise appropriée pour l'opération dans la liste déroulante.",
+operations_usage5: "<strong>Définir la date :</strong> appuyez sur le champ de date pour ouvrir le sélecteur de date et choisir la date correcte.",
+operations_usage6: "<strong>Définir le type :</strong> choisissez si l'opération est un revenu ou une dépense.",
+operations_usage7: "<strong>Enregistrer l'opération :</strong> après avoir saisi toutes les informations, appuyez sur le bouton pour ajouter l'opération au compte sélectionné.",
+operations_tip: "Vous pouvez utiliser le champ des détails pour ajouter des notes supplémentaires sur l'opération, comme le nom du bénéficiaire ou l'objet du paiement.",
+
+account_details_title: "Écran des détails du compte",
+account_details_overview: "Aperçu de l'écran des détails du compte",
+account_details_description: "Cet écran affiche toutes les transactions financières liées à un compte spécifique, offrant une vue détaillée du flux d'argent.",
+account_component1: "<strong>Nom du compte et solde :</strong> affiche le nom du compte et le solde total en haut.",
+account_component2: "<strong>Liste des opérations :</strong> affiche toutes les recettes et dépenses liées à ce compte, triées par date.",
+account_component3: "<strong>Détails de l'opération :</strong> chaque opération montre le montant, la date et la description.",
+account_component4: "<strong>Bouton Ajouter une opération :</strong> pour créer directement une nouvelle opération pour ce compte.",
+account_usage1: "<strong>Afficher les opérations :</strong> faites défiler vers le bas pour voir toutes les opérations historiques du compte.",
+account_usage2: "<strong>Ajouter une nouvelle opération :</strong> appuyez sur le bouton d'ajout (+) pour ajouter un revenu ou une dépense pour ce compte spécifique.",
+account_usage3: "<strong>Modifier/Supprimer une opération :</strong> appuyez longuement sur une opération pour voir les options de modification ou de suppression.",
+account_usage4: "<strong>Afficher le rapport :</strong> pour accéder aux rapports, appuyez sur l'icône PDF dans la barre supérieure. Le nom du compte et la devise seront automatiquement définis selon l'écran actuel.",
+account_tip: "Vous pouvez utiliser cet écran pour revoir vos dépenses et revenus mensuels pour un compte spécifique et identifier les modèles de dépenses.",
+
+invoice_title: "Écran de nouvelle facture",
+invoice_overview: "Aperçu de l'écran d'ajout d'une nouvelle facture",
+invoice_description: "Cet écran vous permet d'enregistrer toutes vos transactions financières facilement et rapidement, qu'il s'agisse d'achats ou de ventes.",
+invoice_component1: "<strong>Type de facture :</strong> sélectionnez le type de facture : ventes ou achats.",
+invoice_component2: "<strong>Nom du compte :</strong> champ pour sélectionner le compte sur lequel l'opération sera effectuée.",
+invoice_component3: "<strong>Date :</strong> champ pour sélectionner la date de la facture.",
+invoice_component4: "<strong>Détails :</strong> champ pour ajouter une brève description de la facture.",
+invoice_component5: "<strong>Montant :</strong> champ pour saisir la valeur de la facture.",
+invoice_component6: "<strong>Montant payé en espèces :</strong> champ pour saisir le montant payé en espèces.",
+invoice_component7: "<strong>Devise :</strong> liste déroulante pour sélectionner la devise utilisée.",
+invoice_component8: "<strong>Bouton Sauvegarder la facture :</strong> la sélection du type de facture (ventes ou achats) sera effectuée automatiquement.",
+invoice_usage1: "<strong>Définir le type de facture :</strong> choisissez si l'opération est une vente ou un achat.",
+invoice_usage2: "<strong>Nom du compte :</strong> commencez à taper le nom du compte et des suggestions apparaîtront. Vous pouvez également ajouter un nouveau compte directement ici.",
+invoice_usage3: "<strong>Saisir le montant :</strong> entrez le montant avec précision, l'application supporte les décimales.",
+invoice_usage4: "<strong>Définir les détails :</strong> rédigez une description claire pour vous souvenir plus tard.",
+invoice_usage5: "<strong>Choisir la devise :</strong> sélectionnez la devise appropriée.",
+invoice_usage6: "<strong>Définir la date :</strong> appuyez sur le champ de date pour ouvrir le sélecteur et choisir la date correcte.",
+invoice_usage7: "<strong>Enregistrer la facture :</strong> après avoir saisi toutes les données, appuyez sur le bouton de sauvegarde pour ajouter la facture au compte sélectionné.",
+invoice_tip: "L'ajout de factures est possible depuis le menu latéral de l'écran principal ou depuis l'écran des détails du compte.",
+
+currencies_title: "Écran des devises",
+currencies_overview: "Aperçu de l'écran des devises",
+currencies_description: "Cet écran vous permet de gérer les devises utilisées dans l'application Carnet de  My Smart Wallet, y compris l'ajout de nouvelles devises et la définition de la devise locale.",
+currencies_component1: "<strong>Liste des devises :</strong> affiche toutes les devises disponibles dans l'application, y compris les devises par défaut et celles ajoutées par vous.",
+currencies_component2: "<strong>Bouton Ajouter une devise :</strong> pour ajouter une nouvelle devise à la liste.",
+currencies_component3: "<strong>Bouton Modifier une devise :</strong> pour modifier le nom d'une devise.",
+currencies_component4: "<strong>Bouton Supprimer une devise :</strong> pour supprimer une devise.",
+currencies_component5: "<strong>Devise locale :</strong> la devise locale sélectionnée automatiquement lors de la première connexion selon votre position géographique.",
+currencies_usage1: "<strong>Ajouter une nouvelle devise :</strong> appuyez sur le bouton d'ajout (+) en bas à droite, puis saisissez le nom de la devise.",
+currencies_usage2: "<strong>Modifier une devise :</strong> appuyez sur l'icône crayon pour modifier le nom d'une devise.",
+currencies_usage3: "<strong>Supprimer une devise :</strong> appuyez sur le bouton de suppression pour supprimer une devise (les devises par défaut ou contenant des opérations ne peuvent pas être supprimées).",
+currencies_usage4: "<strong>Définir la devise locale :</strong> vous pouvez changer manuellement la devise locale par défaut depuis cet écran si nécessaire.",
+currencies_tip: "Assurez-vous que la devise locale est correctement définie pour garantir l'exactitude des rapports financiers.",
+
+account_categories_title: "Écran de classification des comptes",
+account_categories_overview: "Aperçu de l'écran de classification des comptes",
+account_categories_description: "Cet écran vous aide à organiser vos comptes financiers en les classant par type (ex : Banque, Espèces, Carte de crédit, etc.), facilitant ainsi le suivi de vos finances.",
+categories_component1: "<strong>Liste des catégories :</strong> affiche tous les types de comptes disponibles.",
+categories_component2: "<strong>Bouton Ajouter une catégorie :</strong> pour ajouter un nouveau type de compte.",
+categories_component3: "<strong>Bouton Modifier une catégorie :</strong> pour modifier le nom d'une catégorie.",
+categories_component4: "<strong>Bouton Supprimer une catégorie :</strong> pour supprimer une catégorie.",
+categories_usage1: "<strong>Ajouter une nouvelle catégorie :</strong> appuyez sur le bouton d'ajout (+) en bas à droite, puis saisissez le nom de la catégorie.",
+categories_usage2: "<strong>Modifier une catégorie :</strong> appuyez sur une catégorie pour modifier son nom.",
+categories_usage3: "<strong>Supprimer une catégorie :</strong> appuyez sur le bouton de suppression pour supprimer une catégorie (les catégories par défaut ou contenant des comptes ne peuvent pas être supprimées).",
+categories_tip: "Utilisez des catégories claires et précises pour faciliter la gestion et la recherche de vos comptes.",
+
+import_title: "Option d'importation de données",
+import_overview: "Aperçu de l'écran d'importation de données",
+import_description: "Cet écran vous permet d'importer vos données financières depuis des sources externes vers l'application Carnet de  My Smart Wallet, facilitant le transfert de vos enregistrements financiers.",
+import_component1: "<strong>Bouton Choisir le fichier :</strong> pour sélectionner le fichier de données à importer.",
+import_component2: "<strong>Bouton Importer :</strong> pour lancer le processus d'importation.",
+import_component3: "<strong>Statut de l'importation :</strong> affiche la progression de l'importation et les éventuelles erreurs.",
+import_usage1: "<strong>Choisir le fichier :</strong> appuyez sur le bouton pour sélectionner le fichier de données (généralement un fichier db) depuis votre appareil.",
+import_usage2: "<strong>Démarrer l'importation :</strong> après avoir sélectionné le fichier, appuyez sur le bouton d'importation pour commencer le processus.",
+import_usage3: "<strong>Vérifier le statut :</strong> surveillez l'état de l'importation pour vous assurer qu'elle est terminée avec succès.",
+import_usage4: "<strong>Attention :</strong> si vous avez une sauvegarde d'une application spécifique qui n'est pas compatible avec l'importation, contactez le développeur.",
+import_tip: "Assurez-vous que le format du fichier de données respecte les exigences de l'application pour éviter les erreurs d'importation.",
+
+reports_title: "Écran des rapports",
+reports_overview: "Aperçu de l'écran des rapports",
+reports_description: "L'écran des rapports fournit une vue complète de votre situation financière grâce à des graphiques et des rapports détaillés sur vos revenus et dépenses.",
+reports_component1: "<strong>Rapports tabulaires :</strong> fournit des rapports détaillés sous forme de tableaux, filtrables et exportables.",
+reports_component2: "<strong>Options de filtrage :</strong> permet de filtrer les rapports par date, compte ou type d'opération.",
+reports_usage1: "<strong>Choisir le type de rapport :</strong> sélectionnez le type de rapport à afficher (ex : revenus, dépenses, rapport global).",
+reports_usage2: "<strong>Définir la période :</strong> sélectionnez la période du rapport (quotidienne, hebdomadaire, mensuelle, annuelle ou personnalisée).",
+reports_usage3: "<strong>Filtrer les données :</strong> utilisez les options de filtrage pour afficher les données d'un compte spécifique ou de types d'opérations particuliers.",
+reports_usage4: "<strong>Exporter le rapport :</strong> vous pouvez exporter les rapports en fichiers PDF pour les partager ou les analyser hors de l'application.",
+reports_tip: "Utilisez régulièrement les rapports pour surveiller votre santé financière et prendre des décisions éclairées.",
+
+sync_title: "Synchronisation instantanée entre deux appareils",
+sync_overview: "Aperçu de la synchronisation instantanée des données",
+sync_description: "Cette fonctionnalité vous permet, si vous avez plusieurs téléphones, d'ajouter, modifier ou supprimer des opérations sur un appareil et de voir les changements apparaître instantanément sur l'autre.",
+sync_usage1: "<strong>Attention :</strong> cette fonctionnalité ne permet d'utiliser que deux appareils. Pour augmenter le nombre d'appareils autorisés, contactez le développeur.",
+sync_usage2: "<strong>Première étape :</strong> installez l'application Carnet de  My Smart Wallet sur l'autre téléphone.",
+sync_usage3: "<strong>Deuxième étape :</strong> connectez-vous avec le même e-mail utilisé sur le téléphone précédent.",
+sync_usage4: "<strong>Remarque :</strong> l'adresse e-mail doit être identique à celle utilisée sur le téléphone précédent.",
+sync_usage5: "<strong>Dernière étape :</strong> après la connexion, la synchronisation se fera automatiquement et les données du compte apparaîtront sur le nouvel appareil.",
+sync_tip: "Vous pouvez à tout moment supprimer un appareil et en ajouter un autre directement depuis l'application sans contacter le développeur.",
+
+free_plan_title: "Plan gratuit et récompenses",
+free_plan_description: "Lors de votre première inscription, vous recevez un forfait gratuit vous permettant d'ajouter 100 opérations financières. Après avoir utilisé ce forfait, vous pouvez continuer à utiliser l'application de la manière suivante :",
+free_plan1: "<b>Quota quotidien :</b> vous recevrez automatiquement 3 opérations gratuites chaque jour.",
+free_plan2: "<b>Regarder une annonce :</b> depuis le menu latéral, regardez une annonce et obtenez 3 opérations supplémentaires.",
+free_plan3: "<b>Inviter des amis :</b> partagez l'application avec vos amis et recevez des récompenses généreuses et un abonnement permanent à l'application.",
+
+referral_title: "Comment fonctionne le parrainage ?",
+referral_description: "Le système de parrainage vous récompense, vous et votre ami !",
+referral1: "<strong>Vous (le parrain) :</strong> allez dans le menu latéral et choisissez \"Inviter un ami\" pour envoyer votre lien de parrainage. Pour chaque ami qui s'inscrit via votre lien, vous recevrez 5 opérations et 10 opérations supplémentaires pour chaque groupe de 5 personnes inscrites via votre lien.",
+referral2: "<strong>Récompense majeure pour le parrain :</strong> lorsque 5 personnes inscrites via votre lien souscrivent à la version complète, votre abonnement complet est gratuit.",
+referral3: "<strong>Votre ami (le filleul) :</strong> lorsqu'il s'inscrit via votre lien, il reçoit 3 opérations supplémentaires en plus de son forfait gratuit comme cadeau de bienvenue.",
+referral_note: "Vous pouvez toujours suivre votre solde de récompenses depuis le menu latéral.",
+referral_tip: "Profitez des invitations en partageant votre lien dans des groupes et forums pour obtenir des fonctionnalités supplémentaires.",
+
+purchase_title: "Acheter la version complète",
+purchase_description: "Pour obtenir un nombre illimité d'opérations et supprimer toutes les restrictions, vous pouvez acheter la version complète de l'application :",
+purchase1: "Depuis le menu latéral (après épuisement de votre forfait), choisissez \"Acheter l'application\".",
+purchase2: "Un code d'achat unique associé à votre compte sera affiché.",
+purchase3: "Copiez ce code et envoyez-le via WhatsApp pour recevoir les instructions de paiement et activer immédiatement votre compte.",
+purchase4: "La licence vous permet d'utiliser l'application sur deux appareils avec le même compte.",
+purch_tip: "La version complète est proposée à un prix symbolique pour couvrir les frais mensuels de la plateforme Google afin de fournir les fonctionnalités professionnelles de l'application, n'hésitez pas à acheter pour soutenir l'application.",
+tip_note: "Remarque :",
+
+contact_title: "Écran Contact et Support",
+contact_overview: "Aperçu de l'écran Contact et Support",
+contact_description: "Cet écran vous permet de contacter l'équipe de support du Carnet de  My Smart Wallet pour obtenir de l'aide ou donner votre avis.",
+contact_component1: "<strong>Informations de contact :</strong> affiche les numéros de téléphone, l'e-mail et les liens vers les réseaux sociaux.",
+contact_component2: "<strong>Formulaire de contact :</strong> pour envoyer directement une question ou remarque depuis l'application.",
+contact_usage1: "<strong>Contact direct :</strong> appuyez sur les numéros de téléphone ou les adresses e-mail pour contacter directement.",
+contact_usage2: "<strong>Envoyer un message :</strong> remplissez le formulaire avec les informations requises et appuyez sur envoyer.",
+contact_tip: "N'hésitez pas à nous contacter pour toute question ou suggestion d'amélioration de l'application. Vos commentaires sont très précieux pour nous."
+
+        }
+    };
+
+
+    // دالة فتح/إغلاق Dropdown
+    function toggleDropdown() {
+        const dropdown = document.querySelector('.language-dropdown');
+        const options = document.getElementById('language-options');
+        const arrow = document.querySelector('.dropdown-arrow');
+
+        dropdown.classList.toggle('active');
+        options.classList.toggle('show');
+        arrow.classList.toggle('rotated');
+    }
+
+    // دالة اختيار لغة جديدة
+    function selectLanguage(lang, langName) {
+        // تحديث النصوص المترجمة
+        changeLanguage(lang);
+
+        // تحديث اللغة المختارة في Dropdown
+        document.getElementById('selected-language').textContent = langName;
+
+        // تحديث الخيار النشط
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+
+        // إغلاق Dropdown
+        toggleDropdown();
+    }
+
+    // دالة تغيير اللغة (نفس الدالة السابقة مع تعديلات بسيطة)
+    function changeLanguage(lang) {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+        // تحديث النصوص المترجمة
+        const elements = document.querySelectorAll('[data-translate]');
+        elements.forEach(element => {
+            const key = element.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                if (element.innerHTML.includes('<strong>') || element.innerHTML.includes('<b>') || element.innerHTML.includes('<h4>')) {
+                    // الحفاظ على تنسيق HTML للنصوص التي تحتوي على علامات
+                    const translatedText = translations[lang][key];
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = translatedText;
+                    const strongElements = tempDiv.querySelectorAll('strong, b, h4');
+
+                    if (strongElements.length > 0) {
+                        element.innerHTML = translatedText;
+                    } else {
+                        element.textContent = translatedText;
+                    }
+                } else {
+                    element.textContent = translations[lang][key];
+                }
+            }
+        });
+
+        // حفظ اللغة المختارة
+        localStorage.setItem('selectedLanguage', lang);
+
+        // إعادة فتح الأقسام المفتوحة سابقًا
+        reopenExpandedSections();
+    }
+
+    // دالة تبديل الأقسام
+    function toggleSection(header) {
+        const content = header.nextElementSibling;
+        const icon = header.querySelector(".expand-icon");
+
+        header.classList.toggle("active");
+        content.classList.toggle("expanded");
+        icon.classList.toggle("rotated");
+
+        // حفظ حالة القسم
+        const sectionId = header.parentElement.getAttribute('data-section-id') ||
+                          header.querySelector('[data-translate]').getAttribute('data-translate');
+        header.parentElement.setAttribute('data-section-id', sectionId);
+
+        if (content.classList.contains('expanded')) {
+            localStorage.setItem(`section_${sectionId}`, 'expanded');
+        } else {
+            localStorage.removeItem(`section_${sectionId}`);
+        }
+    }
+
+    // إعادة فتح الأقسام المفتوحة سابقًا
+    function reopenExpandedSections() {
+        const sections = document.querySelectorAll('.help-section');
+        sections.forEach(section => {
+            const sectionId = section.getAttribute('data-section-id');
+            if (sectionId && localStorage.getItem(`section_${sectionId}`) === 'expanded') {
+                const header = section.querySelector('.help-header');
+                const content = header.nextElementSibling;
+                const icon = header.querySelector(".expand-icon");
+
+                header.classList.add("active");
+                content.classList.add("expanded");
+                icon.classList.add("rotated");
+            }
+        });
+    }
+
+
+
+    // عند تحميل الصفحة، تحميل الإعدادات المحفوظة
+    document.addEventListener("DOMContentLoaded", function() {
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'ar';
+   const firstHeader = document.querySelector(".help-header");
+            if (firstHeader) {
+                toggleSection(firstHeader);
+            }
+
+ // إضافة دالة التكبير والتصغير بالإيماءات
+            let initialDistance = null;
+            let currentScale = 1;
+            const content = document.body;
+        // تفعيل الزر المناسب للغة
+        document.querySelectorAll('.language-selector button').forEach(button => {
+            if (button.textContent === 'العربية' && savedLanguage === 'ar') {
+                button.classList.add('active');
+            } else if (button.textContent === 'English' && savedLanguage === 'en') {
+                button.classList.add('active');
+            } else if (button.textContent === 'Español' && savedLanguage === 'es') {
+                button.classList.add('active');
+            }
+        });
+
+        changeLanguage(savedLanguage);
+
+
+        // فتح أول قسم تلقائياً إذا لم يكن هناك أقسام مفتوحة
+        const hasOpenSections = document.querySelector('.help-content.expanded');
+        if (!hasOpenSections) {
+            const firstHeader = document.querySelector(".help-header");
+            if (firstHeader) {
+                toggleSection(firstHeader);
+            }
+        }
+    });
+
+    // إضافة دالة التكبير والتصغير بالإيماءات
+    document.addEventListener('DOMContentLoaded', function() {
+        let initialDistance = null;
+        let currentScale = 1;
+        const content = document.body;
+
+        content.addEventListener('touchstart', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                initialDistance = Math.hypot(
+                    e.touches[1].clientX - e.touches[0].clientX,
+                    e.touches[1].clientY - e.touches[0].clientY
+                );
+            }
+        });
+
+
+
+
+    });
+      function toggleSection(header) {
+            const allHeaders = document.querySelectorAll(".help-header");
+            const allContents = document.querySelectorAll(".help-content");
+            const allIcons = document.querySelectorAll(".expand-icon");
+
+            allHeaders.forEach(h => h.classList.remove("active"));
+            allContents.forEach(c => c.classList.remove("expanded"));
+            allIcons.forEach(i => i.classList.remove("rotated"));
+
+            const content = header.nextElementSibling;
+            const icon = header.querySelector(".expand-icon");
+
+            header.classList.add("active");
+            content.classList.add("expanded");
+            icon.classList.add("rotated");
+        }
+
+
+         function toggleSection(header) {
+            const allHeaders = document.querySelectorAll(".help-header");
+            const allContents = document.querySelectorAll(".help-content");
+            const allIcons = document.querySelectorAll(".expand-icon");
+
+            allHeaders.forEach(h => h.classList.remove("active"));
+            allContents.forEach(c => c.classList.remove("expanded"));
+            allIcons.forEach(i => i.classList.remove("rotated"));
+
+            const content = header.nextElementSibling;
+            const icon = header.querySelector(".expand-icon");
+
+            header.classList.add("active");
+            content.classList.add("expanded");
+            icon.classList.add("rotated");
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const firstHeader = document.querySelector(".help-header");
+            if (firstHeader) {
+                toggleSection(firstHeader);
+            }
+
+
+
+            content.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    initialDistance = Math.hypot(
+                        e.touches[1].clientX - e.touches[0].clientX,
+                        e.touches[1].clientY - e.touches[0].clientY
+                    );
+                }
+            });
+
+
+            content.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2 && initialDistance !== null) {
+                    e.preventDefault();
+                    const currentDistance = Math.hypot(
+                        e.touches[1].clientX - e.touches[0].clientX,
+                        e.touches[1].clientY - e.touches[0].clientY
+                    );
+
+                    if (initialDistance > 0) {
+                        const scale = currentDistance / initialDistance;
+
+                        // تحديد الحد الأدنى والأقصى للتكبير
+                        const newScale = Math.max(0.8, Math.min(scale * currentScale, 2));
+
+                        // تطبيق التحجيم
+                        content.style.transform = `scale(${newScale})`;
+                        content.style.transformOrigin = 'center center';
+                    }
+                }
+            });
+
+            content.addEventListener('touchend', function() {
+                if (initialDistance !== null) {
+                    // حفظ المقياس الحالي
+                    const computedStyle = window.getComputedStyle(content);
+                    const matrix = new DOMMatrixReadOnly(computedStyle.transform);
+                    currentScale = matrix.a;
+
+                    initialDistance = null;
+                }
+            });
+        });
+
+    // عند تحميل الصفحة، تحميل الإعدادات المحفوظة
+    document.addEventListener("DOMContentLoaded", function() {
+        const savedLanguage = localStorage.getItem('selectedLanguage') || 'ar';
+
+        // تعيين اللغة المحفوظة
+        let langName = 'العربية';
+        if (savedLanguage === 'en') langName = 'English';
+        if (savedLanguage === 'es') langName = 'Español';
+        if (savedLanguage === 'fr') langName = 'Français';
+
+        document.getElementById('selected-language').textContent = langName;
+
+        // تحديث الخيار النشط
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.classList.remove('active');
+            if (option.textContent.includes(langName)) {
+                option.classList.add('active');
+            }
+        });
+
+        changeLanguage(savedLanguage);
+
+        // فتح أول قسم تلقائياً إذا لم يكن هناك أقسام مفتوحة
+        const hasOpenSections = document.querySelector('.help-content.expanded');
+        if (!hasOpenSections) {
+            const firstHeader = document.querySelector(".help-header");
+            if (firstHeader) {
+                toggleSection(firstHeader);
+            }
+        }
+
+        // إغلاق Dropdown عند النقر خارجها
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.language-selector');
+            if (!dropdown.contains(event.target)) {
+                const options = document.getElementById('language-options');
+                const arrow = document.querySelector('.dropdown-arrow');
+                const dropdownBtn = document.querySelector('.language-dropdown');
+
+                if (options.classList.contains('show')) {
+                    options.classList.remove('show');
+                    arrow.classList.remove('rotated');
+                    dropdownBtn.classList.remove('active');
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

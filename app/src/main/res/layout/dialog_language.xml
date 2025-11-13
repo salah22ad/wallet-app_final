@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- عنوان اختيار اللغة -->
+    <TextView
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:text="@string/language_selection_title"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        android:textColor="?attr/colorPrimary"
+        android:layout_marginBottom="24dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:padding="24dp">
+
+
+    <!-- Spinner لاختيار اللغة -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_language"
+        app:endIconTint="@color/primaryColor">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/language_spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/spinner_rounded_background"
+            android:spinnerMode="dropdown" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_language"
+            app:tint="?attr/colorPrimary" />
+    <Spinner
+        android:id="@+id/language_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/spinner_rounded_background"
+        android:padding="8dp"
+        android:spinnerMode="dropdown" />
+    </LinearLayout>
+    <!-- نص التحذير -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/warning_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/warning_background"
+            android:drawablePadding="8dp"
+            android:textColor="@color/text_language"
+            android:padding="16dp"
+            android:scrollbars="vertical"
+            android:text="@string/language_selection_warning"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            app:drawableStartCompat="@drawable/ic_alert" />
+    </ScrollView>
+    <TextView
+        android:id="@+id/tvAgreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="@string/agreement_text"
+        android:textColor="@color/text_secondary"
+        android:textSize="12dp" />
+    <!-- زر المتابعة -->
+    <Button
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/continue_button"
+        style="@style/Widget.Material3.Button"
+        app:cornerRadius="16dp"/>
+</LinearLayout>

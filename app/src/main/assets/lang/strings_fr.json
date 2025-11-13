@@ -1,0 +1,23 @@
+{
+  "server_running": "Le serveur est en cours d'exécution",
+  "server_stopped": "Serveur arrêté",
+  "start_server": "Démarrer le serveur",
+  "stop_server": "Arrêter le serveur",
+  "account_name": "Nom du compte",
+  "currency": "Devise",
+  "balance_type": "Type de solde",
+  "balance": "Solde",
+  "no_accounts": "Aucun compte avec solde.",
+  "totals_in_currency": "Totaux en devise: ",
+  "month": "Mois",
+  "total_credit": "Total Crédit",
+  "total_debit": "Total Débit",
+  "net_change": "Variation nette",
+  "transactions_in_currency": "Transactions en devise: ",
+  "date": "Date",
+  "details": "Détails",
+  "debit": "Débit",
+  "credit": "Crédit",
+  "balance_type_debit": "Débit",
+  "balance_type_credit": "Crédit"
+}

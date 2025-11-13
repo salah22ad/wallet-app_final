@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/dialog_background_2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_rate"
+        android:contentDescription="@string/menu_rate_app"
+        app:tint="#F2E57C" />
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_rate_app"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rate_massge"
+        android:textColor="@color/grey_500"
+        android:textSize="15dp"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/rateNowButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rate_buttonn"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/btn_stroke_color_selector"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/laterButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/grey_500"
+        android:textColor="@android:color/white" />
+</LinearLayout>

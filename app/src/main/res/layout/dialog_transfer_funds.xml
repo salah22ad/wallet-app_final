@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transferFieldsContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- العنوان -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/transfer_funds_title"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+        android:textStyle="bold" />
+
+    <!-- الصف الأول: حساب المرسل (المدين) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fromAccountLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/from_account_hint"
+        app:startIconDrawable="@drawable/ic_arrow_up_green">
+
+        <AutoCompleteTextView
+            android:id="@+id/creditorAccountAutocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:tag="exclude_global_filter"
+            android:inputType="text"
+            android:textSize="15dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- الصف الثاني: حساب المستقبل (الدائن) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/toAccountLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/to_account_hint"
+        app:startIconDrawable="@drawable/ic_arrow_down_red">
+
+        <AutoCompleteTextView
+            android:id="@+id/debtorAccountAutocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:tag="exclude_global_filter"
+            android:inputType="text"
+            android:textSize="15dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/detailsLayout"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:hint="@string/details_hint">
+
+        <AutoCompleteTextView
+            android:id="@+id/detailsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="14dp"
+            android:tag="exclude_global_filter"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- الصف الثالث: المبلغ مع عملة -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/amountLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/amount_hint"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_calculator"
+            app:endIconContentDescription="@string/calculator">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/amountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- العملة -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/currencyLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/currency_hint">
+
+            <AutoCompleteTextView
+                android:id="@+id/currencySpinnerAutocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="none"
+                android:textSize="15dp"
+                tools:text="@string/currency_local"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <!-- الصف الرابع: زر التحويل -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/transferButton"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/transfer_funds"
+        android:textSize="16dp"
+        android:textAppearance="@style/TextAppearance.App.Cairo.TitleLarge"
+        android:backgroundTint="@color/primary"
+        app:icon="@drawable/ic_transfer" />
+
+</LinearLayout>

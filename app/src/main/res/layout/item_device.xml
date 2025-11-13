@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="6dp"
+    android:background="@android:color/white"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp">
+
+    <!-- Device Icon -->
+    <ImageView
+        android:id="@+id/iv_device_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_smartphone"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="12dp"
+        app:tint="@color/primaryColor" />
+
+    <!-- Device Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_device_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_name"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/tv_device_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_details"
+            android:textSize="12dp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tv_last_active"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_last_activate"
+            android:textSize="11dp"
+            android:textColor="@color/accent_orange"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+    <!-- Remove Button -->
+    <Button
+        android:id="@+id/btn_remove_device"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_device"
+        android:textSize="12dp"
+        android:textColor="@color/accent_orange"
+        android:strokeColor="@color/accent_orange"
+        android:layout_gravity="center_vertical"
+        android:minWidth="60dp"
+        android:minHeight="32dp" />
+
+</LinearLayout>
+

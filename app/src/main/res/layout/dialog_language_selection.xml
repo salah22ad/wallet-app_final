@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- عنوان التحذير -->
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:text="@string/language_selection_title"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        android:textColor="?attr/colorPrimary"
+        android:layout_gravity="center" />
+
+    <!-- خيارات اللغات -->
+    <RadioGroup
+        android:id="@+id/language_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+
+        <RadioButton
+            android:id="@+id/radio_arabic"
+            style="@style/LanguageRadioButton"
+            android:text="@string/arabic"
+            android:gravity="center_vertical|left"/>
+
+        <RadioButton
+            android:id="@+id/radio_english"
+            style="@style/LanguageRadioButton"
+            android:text="@string/english" />
+
+        <RadioButton
+            android:id="@+id/radio_france"
+            style="@style/LanguageRadioButton"
+            android:text="@string/frances" />
+
+        <RadioButton
+            android:id="@+id/radio_spanish"
+            style="@style/LanguageRadioButton"
+            android:text="@string/spanish" />
+    </RadioGroup>
+
+    <!-- ScrollView للتحذير الطويل -->
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_marginTop="16dp">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/warning_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/warning_background"-->
+<!--            android:drawablePadding="8dp"-->
+<!--            android:padding="8dp"-->
+<!--            android:text="@string/language_selection_warning"-->
+<!--            android:textAppearance="?attr/textAppearanceBodySmall"-->
+<!--            app:drawableStartCompat="@drawable/ic_alert"-->
+<!--            android:scrollbars="vertical" />-->
+<!--    </ScrollView>-->
+
+    <!-- زر المتابعة -->
+    <Button
+        android:id="@+id/btn_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/continue_button"/>
+</LinearLayout>

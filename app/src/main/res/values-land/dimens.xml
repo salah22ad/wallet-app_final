@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="phone_card_margin">12dp</dimen>
+    <dimen name="phone_card_corner_radius">20dp</dimen>
+    <dimen name="bottom_card_height">80dp</dimen>
+    <dimen name="bottom_card_padding_vertical">8dp</dimen>
+    <dimen name="fab_size_small">40dp</dimen>
+    <dimen name="card_elevation_land">6dp</dimen>
+
+
+    <!-- تحديث الأبعاد الأخرى للوضع الأفقي -->
+    <dimen name="card_margin">12dp</dimen>
+    <dimen name="card_corner_radius">20dp</dimen>
+</resources>

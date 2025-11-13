@@ -1,0 +1,23 @@
+{
+  "server_running": "Server is running",
+  "server_stopped": "Server stopped",
+  "start_server": "Start Server",
+  "stop_server": "Stop Server",
+  "account_name": "Account Name",
+  "currency": "Currency",
+  "balance_type": "Balance Type",
+  "balance": "Balance",
+  "no_accounts": "No accounts with balance.",
+  "totals_in_currency": "Totals in currency: ",
+  "month": "Month",
+  "total_credit": "Total Credit",
+  "total_debit": "Total Debit",
+  "net_change": "Net Change",
+  "transactions_in_currency": "Transactions in currency: ",
+  "date": "Date",
+  "details": "Details",
+  "debit": "Debit",
+  "credit": "Credit",
+  "balance_type_debit": "Debit",
+  "balance_type_credit": "Credit"
+}

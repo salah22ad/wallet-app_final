@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path android:fillColor="#22000000" android:pathData="M3,20h18v2H3z" android:alpha="0.12"/>
+
+    <!-- wallet body (blue-gray gradient simulation) -->
+<!--    42A5F5-->
+    <path android:fillColor="#5e7fa7" android:pathData="M4,6h16a2,2 0 0 1 2,2v8a2,2 0 0 1-2,2H4a2,2 0 0 1-2-2V8a2,2 0 0 1 2-2z"/>
+
+    <!-- wallet flap (lighter upper edge) -->
+    <path android:fillColor="#6b91c0" android:pathData="M4,6h16v2H4z" android:alpha="0.9"/>
+
+    <!-- pocket highlight (simulate depth) -->
+    <path android:fillColor="#80ffffff" android:pathData="M5,9h14v1H5z" android:alpha="0.15"/>
+
+    <!-- button (accent color) -->
+    <path android:fillColor="#24e5aa" android:pathData="M17,12a1,1 0 1,0 2,0 1,1 0 1,0 -2,0z"/>
+
+    <!-- top light gloss -->
+    <path android:fillColor="#80ffffff" android:pathData="M4,6c5,-1 11,-1 16,0v1c-5,-0.6 -11,-0.6 -16,0z" android:alpha="0.18"/>
+
+    <!-- subtle inner shadow bottom -->
+    <path android:fillColor="#22000000" android:pathData="M4,16h16v1H4z" android:alpha="0.18"/>
+</vector>

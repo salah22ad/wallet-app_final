@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="80dp"
+    android:viewportWidth="48"
+    android:viewportHeight="80">
+
+    <!-- البالون -->
+    <path
+        android:fillColor="#FF5252"
+        android:pathData="M24,4C29,4 33,8 33,13C33,18 29,22 24,22C19,22 15,18 15,13C15,8 19,4 24,4Z"/>
+
+    <!-- الجزء السفلي من البالون -->
+    <path
+        android:fillColor="#FF5252"
+        android:pathData="M22,22L22,30L26,30L26,22Z"/>
+
+    <!-- الخيط -->
+    <path
+        android:strokeColor="#000000"
+        android:strokeWidth="0.5"
+        android:pathData="M24,30L24,40"/>
+</vector>

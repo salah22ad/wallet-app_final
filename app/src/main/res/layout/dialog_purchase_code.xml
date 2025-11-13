@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/dialog_background_2">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_shopping_cart"
+            android:layout_marginEnd="12dp"
+            app:tint="@color/primary_blue" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/purchase_code_label"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_blue" />
+
+    </LinearLayout>
+
+    <!-- Instructions -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:maxHeight="300dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/tv_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textColor="@color/text_secondary"
+            android:lineSpacingExtra="4dp"
+            android:padding="16dp"
+            android:background="@drawable/contact_background" />
+
+    </ScrollView>
+
+    <!-- Purchase Code Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/contact_background"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/purchase_code_hint"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_blue"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tv_purchase_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="XXXX-XXXX-XXXX-XXXX"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/accent_orange"
+            android:background="@android:color/white"
+            android:padding="12dp"
+            android:gravity="center"
+            android:fontFamily="monospace"
+            android:elevation="2dp" />
+
+    </LinearLayout>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/btn_copy_code"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/copy_code"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/primary_blue"
+            android:layout_marginEnd="8dp" />
+        <Button
+            android:id="@+id/btnGooglePlay"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/google_play_purchase"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/primary_blue"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_whatsapp"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/whatsapp_send_code_purchase"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#25D366"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- Close Button -->
+    <Button
+        android:id="@+id/btn_close"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/close"
+        android:textColor="@color/primary_blue"
+        android:strokeColor="@color/primary_blue" />
+
+</LinearLayout>
+

@@ -1,0 +1,23 @@
+{
+  "server_running": "Der Server läuft",
+  "server_stopped": "Server gestoppt",
+  "start_server": "Server starten",
+  "stop_server": "Server stoppen",
+  "account_name": "Kontoname",
+  "currency": "Währung",
+  "balance_type": "Saldo-Typ",
+  "balance": "Saldo",
+  "no_accounts": "Keine Konten mit Guthaben.",
+  "totals_in_currency": "Summen in Währung: ",
+  "month": "Monat",
+  "total_credit": "Gesamtgutschrift",
+  "total_debit": "Gesamtschuld",
+  "net_change": "Nettoveränderung",
+  "transactions_in_currency": "Transaktionen in Währung: ",
+  "date": "Datum",
+  "details": "Details",
+  "debit": "Soll",
+  "credit": "Haben",
+  "balance_type_debit": "Soll",
+  "balance_type_credit": "Haben"
+}

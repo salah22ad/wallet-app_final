@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tablet_card_margin">12dp</dimen>
+    <dimen name="tablet_card_corner_radius">20dp</dimen>
+    <dimen name="card_margin">12dp</dimen>
+    <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="recycler_view_padding">16dp</dimen>
+    <!-- أبعاد إضافية للأجهزة اللوحية -->
+    <dimen name="bottom_card_height">90dp</dimen>
+    <dimen name="bottom_card_padding_vertical">10dp</dimen>
+</resources>

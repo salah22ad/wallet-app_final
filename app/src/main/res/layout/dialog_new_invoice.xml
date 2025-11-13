@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="22dp"
+            android:text="@string/new_invoice_tit"
+            android:textAppearance="@style/TextAppearance.App.Cairo.BodyLarge"
+            android:textColor="?attr/colorPrimary"
+            android:paddingBottom="0dp"/>
+
+        <!-- Bill Type Radio Group -->
+        <RadioGroup
+            android:id="@+id/billTypeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <RadioButton
+                android:id="@+id/radioSales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ar_text_6_2"
+                android:textSize="14dp"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/radioPurchases"
+                android:layout_width="wrap_content"
+                android:textSize="14dp"
+                android:layout_height="wrap_content"
+                android:text="@string/ar_text_7_2"
+                android:layout_marginStart="16dp"/>
+        </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/accountInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.3"
+            android:hint="@string/account_name_hint">
+
+            <AutoCompleteTextView
+                android:id="@+id/accountAutoComplete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:singleLine="true"
+                android:enabled="false"
+                android:textSize="15dp"
+                android:tag="exclude_global_filter"
+                android:gravity="center"
+                android:inputType="text|textNoSuggestions|textFilter"
+                android:importantForAutofill="no"
+                android:textIsSelectable="true"
+                android:imeOptions="actionNext"
+                android:selectAllOnFocus="true"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/invoiceDateLayout"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.7"
+            android:hint="@string/date_hint"
+            app:startIconDrawable="@drawable/ic_calendar_today">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/invoiceDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:textSize="12dp"
+                android:layout_marginStart="4dp"
+                android:focusable="false"
+                android:gravity="center" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+        <!-- Currency Spinner -->
+
+        <!-- Details -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/detailsLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:hint="@string/details_hint">
+
+            <EditText
+                android:id="@+id/detailsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:tag="exclude_global_filter"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:maxLines="3"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!-- Invoice Amount -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/invoiceAmountLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/invoce_value"
+            android:gravity="center"
+            android:layout_weight="1"
+            app:prefixText="+">
+
+            <EditText
+                android:id="@+id/invoiceAmountEditText"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Paid Amount -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/paidAmountLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="@string/amount_pay"
+            app:prefixText="+">
+
+            <EditText
+                android:id="@+id/paidAmountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:maxLines="1"/>
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+        <!-- Remaining Amount -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remaining_remain"
+                android:textSize="14dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/remainingAmountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginStart="8dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/currencyInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/currency"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                app:endIconMode="dropdown_menu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/currencyAutoComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textSize="14dp"
+                    android:gravity="center"
+                    android:focusable="false"
+                    android:clickable="true"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <!-- Buttons Row -->
+    <LinearLayout
+        android:id="@+id/layoutSaveActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <!-- Save Button (Visible in create/edit mode) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="?attr/colorPrimary"
+            app:strokeColor="?attr/colorPrimary"
+            app:icon="@drawable/ic_save"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/cancel"
+            android:textColor="@color/secondaryColor"
+            app:strokeColor="@color/secondaryColor"
+            app:icon="@drawable/ic_close_white"/>
+
+        <!-- Share Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/menu_share_pdf"
+            android:textColor="@color/secondaryColor"
+            app:strokeColor="@color/secondaryColor"
+            app:icon="@drawable/ic_share"/>
+
+        <!-- Export PDF Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/exportPdfButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="PDF"
+            android:visibility="gone"
+            android:textColor="@color/secondaryColor"
+            app:strokeColor="@color/secondaryColor"
+            app:icon="@drawable/ic_pdf"/>
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layoutEditActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- Delete Button (Visible in view mode) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deleteButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/delete"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/red"
+                app:strokeColor="@color/red"
+                app:icon="@drawable/ic_delete"/>
+            <!-- Edit Button (Visible in view mode) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/editButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/edit"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/primaryColor"
+                app:strokeColor="@color/primaryColor"
+                app:icon="@drawable/ic_edit"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

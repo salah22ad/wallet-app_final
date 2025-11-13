@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/rounded_legend_background"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <!-- Color Indicator -->
+    <View
+        android:id="@+id/colorIndicator"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/circle_shape"
+        tools:backgroundTint="@color/md_theme_primary" />
+
+    <!-- Account Type Name -->
+    <TextView
+        android:id="@+id/accountTypeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        tools:text="عملاء" />
+
+    <!-- Amount -->
+    <TextView
+        android:id="@+id/accountTypeAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        tools:text="5,000" />
+
+    <!-- Percentage -->
+    <TextView
+        android:id="@+id/accountTypePercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_percentage_badge"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/white"
+        android:textSize="11dp"
+        android:textStyle="bold"
+        tools:text="35%" />
+
+</LinearLayout>

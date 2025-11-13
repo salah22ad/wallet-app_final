@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reports_title"
+        android:gravity="center_horizontal"
+        android:background="?attr/colorPrimary"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"
+        android:textColor="?attr/colorOnPrimary" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <LinearLayout
+                android:id="@+id/accounts_range_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/account_type_spinner_layout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="4dp"
+                    android:hint="@string/menu_account_types">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/spinner_account_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:textSize="12dp"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        tools:text="@string/ar_text_5_5"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/accounts_spinner_layout"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="4dp"
+                    android:hint="@string/main_title_accounts">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/spinner_accounts"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:textSize="12dp"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        tools:text="@string/main_title_accounts"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_date_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="@string/set_date" />
+
+                <LinearLayout
+                    android:id="@+id/date_range_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="horizontal" >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/start_date_Layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:textSize="12dp"
+                        android:hint="@string/start_date_hint">
+                        <!--                    app:startIconDrawable="@drawable/ic_calendar_today">-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edittext_start_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:clickable="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/end_date_Layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:textSize="12dp"
+                        android:hint="@string/end_date_hint">
+                        <!--                    app:startIconDrawable="@drawable/ic_calendar_today">-->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edittext_end_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:clickable="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="@string/set_currency" />
+                <LinearLayout
+                    android:id="@+id/currency_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="horizontal" >
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/currency_spinner_layout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="170dp"
+                        android:layout_gravity="center"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:layout_marginBottom="4dp"
+                        android:hint="@string/currency_hint">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spinner_currencies"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="none"
+                            android:textSize="12dp"
+                            android:layout_marginStart="4dp"
+                            android:gravity="center"
+                            tools:text="@string/currency_hint"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:textColor="@color/blue_500" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/report_type_title"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_primary"
+                android:textAppearance="?attr/textAppearanceLabelLarge"/>
+            <RadioGroup
+                android:id="@+id/radiogroup_report_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radio_total_balance"
+                    android:text="@string/radio_total_balance"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/radio_detailed_movement"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="@string/radio_detailed_movement"/>
+                <RadioButton
+                    android:id="@+id/radio_monthly_summary"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="@string/radio_monthly_summary"/>
+
+                <RadioButton
+                    android:id="@+id/radio_total_balance_by_account_type"
+                    android:text="@string/radio_total_balance_by_account_type"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/radio_detailed_movement_by_account_type"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="@string/radio_detailed_movement_by_account_type"/>
+                <RadioButton
+                    android:id="@+id/radio_monthly_summary_by_account_type"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:text="@string/radio_monthly_summary_by_account_type"/>
+            </RadioGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_generate_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
+                android:text="@string/button_generate_pdf"
+                app:icon="@drawable/ic_pdf"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

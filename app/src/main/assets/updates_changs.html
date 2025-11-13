@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ما الجديد في تطبيق محفظتي الذكية</title>
+    <link rel="icon" href="https://haddadinc.github.io/my-wallet-privacy/app_icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .update-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 900px;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .header {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            color: white;
+            padding: 30px 25px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .app-icon i {
+            font-size: 40px;
+            color: #4e54c8;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .version-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .version-badge {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .update-content {
+            padding: 25px;
+            position: relative;
+        }
+
+        .version-frame {
+            border: 3px solid #f1f3f5;
+            border-radius: 12px;
+            padding: 25px;
+            background: #f8f9fa;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .frame-title {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .features {
+            margin-top: 10px;
+        }
+
+        .feature {
+            display: flex;
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #4e54c8;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 20px;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon.security {
+            color: #4e54c8;
+            background: linear-gradient(135deg, #e6eeff, #ffffff);
+        }
+
+        .feature-icon.referral {
+            color: #ff6b6b;
+            background: linear-gradient(135deg, #ffe6e6, #ffffff);
+        }
+
+        .feature-icon.purchase {
+            color: #20bf6b;
+            background: linear-gradient(135deg, #e6ffed, #ffffff);
+        }
+
+        .feature-icon.location {
+            color: #fd9644;
+            background: linear-gradient(135deg, #fff3e6, #ffffff);
+        }
+
+        .feature-icon.device {
+            color: #a55eea;
+            background: linear-gradient(135deg, #f3e6ff, #ffffff);
+        }
+
+        .feature-icon i {
+            font-size: 24px;
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #2d3436;
+        }
+
+        .feature-content p {
+            color: #636e72;
+            line-height: 1.6;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .continue-btn {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(78, 84, 200, 0.3);
+        }
+
+        .continue-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(78, 84, 200, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .version-badge {
+            animation: pulse 2s infinite;
+        }
+
+        /* Language selector styles */
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            direction: ltr;
+            z-index: 10;
+        }
+
+        .language-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 2px;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .language-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-btn.active {
+            background-color: white;
+            color: #4e54c8;
+            border-color: white;
+        }
+
+        /* Styles for LTR languages */
+        [dir="ltr"] {
+            text-align: left;
+        }
+
+        [dir="ltr"] .language-selector {
+            right: 15px;
+            left: auto;
+        }
+
+        [dir="ltr"] .feature {
+            border-left: none;
+            border-right: 4px solid #4e54c8;
+        }
+
+        [dir="ltr"] .feature-icon {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+
+        [dir="ltr"] .frame-title {
+            right: auto;
+            left: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .feature {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .feature-icon {
+                margin-left: 0;
+                margin-bottom: 15px;
+            }
+
+            .version-badge {
+                font-size: 16px;
+                padding: 6px 16px;
+            }
+
+            [dir="ltr"] .feature-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .language-selector {
+                position: static;
+                margin-bottom: 15px;
+                direction: rtl;
+                text-align: center;
+            }
+
+            [dir="ltr"] .language-selector {
+                direction: ltr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 20px 15px 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .header p {
+                font-size: 14px;
+            }
+
+            .update-content {
+                padding: 15px;
+            }
+
+            .version-frame {
+                padding: 15px;
+            }
+
+            .feature {
+                padding: 12px;
+            }
+
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .feature-icon i {
+                font-size: 20px;
+            }
+
+            .feature-content h3 {
+                font-size: 16px;
+            }
+
+            .feature-content p {
+                font-size: 14px;
+            }
+
+            .continue-btn {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .version-badge {
+                font-size: 14px;
+            }
+
+            .feature-content h3 {
+                font-size: 15px;
+            }
+
+            .feature-content p {
+                font-size: 13px;
+            }
+        }
+
+        .tip-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 15px;
+            color: #856404;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-right: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+<div class="update-container">
+    <div class="header">
+        <div class="language-selector">
+            <button class="language-btn" data-lang="ar">عربي</button>
+            <button class="language-btn" data-lang="en">English</button>
+            <button class="language-btn" data-lang="es">Español</button>
+        </div>
+
+        <div class="app-icon">
+            <!-- سيتم استبدال هذا بـأيقونة التطبيق الفعلية -->
+            <i class="fas fa-file-invoice-dollar"></i>
+        </div>
+        <h1 id="title">ما الجديد في تطبيق محفظتي الذكية</h1>
+        <p id="subtitle">اكتشف الميزات الجديدة التي أضفناها لتحسين تجربتك</p>
+    </div>
+
+    <div class="update-content">
+        <div class="version-frame">
+            <div class="version-container">
+                <div class="version-badge" id="version-text">الميزات الجديدة في الإصدار 1.0.5</div>
+            </div>
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon location">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 id="feature1-title">اكتشاف العملة المحلية تلقائياً</h3>
+                        <p id="feature1-desc">ميزة جديدة تتيح للتطبيق اكتشاف عملتك المحلية تلقائياً بناءً على موقعك الجغرافي. لا حاجة للإعدادات اليدوية، سيتم تحديد العملة المناسبة لك تلقائياً لتوفير الوقت وتحسين التجربة.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon device">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 id="feature2-title">إدارة الأجهزة المرتبطة</h3>
+                        <p id="feature2-desc">يمكنك الآن ربط جهازين بنفس الحساب وإدارتهما بسهولة. يمكنك إزالة جهاز وإضافة آخر دون الحاجة للاتصال بالمطور. تحكم كامل في أجهزتك من داخل التطبيق.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon security">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 id="feature3-title">نظام الترخيص المتقدم والتشفير</h3>
+                        <p id="feature3-desc">تم إضافة نظام ترخيص مشفر يحمي بياناتك ويضمن عمل التطبيق بشكل آمن. جميع بيانات المستخدم الآن مشفرة باستخدام تقنيات متقدمة لحماية خصوصيتك ومنع الاستخدام غير المصرح به.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon referral">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 id="feature4-title">دعوة الأصدقاء والمكافآت</h3>
+                        <p id="feature4-desc">يمكنك الآن دعوة أصدقائك إلى التطبيق واستلام مكافآت حصرية. كل صديق تدعوه يعني نقاط أكثر وعروض إضافية. شارك رمز الدعوة الخاص بك واكسب مزايا إضافية.</p>
+                        <p id="feature4-desc2">نظام الدعوات يكافئك أنت وصديقك!</p>
+                        <ul id="feature4-list">
+                            <li><strong id="feature4-list1-title">أنت (الداعي):</strong> <span id="feature4-list1-desc">اذهب للقائمة الجانبية واختر "دعوة صديق" وأرسل رابط الدعوة الخاص بك. مقابل كل صديق يسجل عبر رابطك، ستحصل على 5 عمليات كمكافئة واعطائك 10 عمليات اضافية لكل 5 اشخاص تم تسجيلهم عبر رابط الدعوة الخاص بك.</span></li>
+                            <li><strong id="feature4-list2-title">المكافئة الكبرى للداعي:</strong> <span id="feature4-list2-desc">عند قيام 5 اشخاص من الذين قاموا بالتسجيل بواسطة رابطك بالاشتراك بالنسخة الكاملة سيتم اشتراكك بالنسخة الكاملة مجانا.</span></li>
+                            <li><strong id="feature4-list3-title">صديقك (المدعو):</strong> <span id="feature4-list3-desc">عندما يسجل صديقك عبر رابطك، سيحصل هو على 3 عمليات إضافية فوق باقته المجانية كهدية ترحيب.</span></li>
+                        </ul>
+                        <p id="feature4-desc3">يمكنك دائماً متابعة رصيد مكافآتك من القائمة الجانبية.</p>
+                        <div class="tip-box">
+                            <strong id="tip-title">نصيحة:</strong> <span id="tip-desc">إستفد من دعوات الاصدقاء بمشاركة رابطك في المجموعات والمنتديات لتكسب ميزات أضافية.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon purchase">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3 id="feature5-title">الإشتراك بالتطبيق والترقية</h3>
+                        <p id="feature5-desc">تم إضافة خيار شراء التطبيق بالكامل لإزالة القيود والاستمتاع بجميع الميزات بدون حدود. استمتع بتجربة خالية من الإعلانات مع ميزات متقدمة حصرية للمستخدمين المميزين.</p>
+                        <strong id="feature5-note-title">ملاحظة:</strong> <span id="feature5-note-desc">تم جعل النسخة الكاملة بمبلغ رمزي وذلك لتغطية الرسوم الشهري لمنصة جوجل لتغطية ميزات التطبيق الإحترافية فلا تتردد بالشراء دعماً للتطبيق</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button class="continue-btn" onclick="closeDialog()" id="continue-btn">استمرار إلى التطبيق</button>
+    </div>
+</div>
+
+<script>
+    // ترجمة النصوص للغات المختلفة
+    const translations = {
+        ar: {
+            title: "ما الجديد في تطبيق محفظتي الذكية",
+            subtitle: "اكتشف الميزات الجديدة التي أضفناها لتحسين تجربتك",
+            versionText: "الميزات الجديدة في الإصدار 1.0.5",
+            feature1Title: "اكتشاف العملة المحلية تلقائياً",
+            feature1Desc: "ميزة جديدة تتيح للتطبيق اكتشاف عملتك المحلية تلقائياً بناءً على موقعك الجغرافي. لا حاجة للإعدادات اليدوية، سيتم تحديد العملة المناسبة لك تلقائياً لتوفير الوقت وتحسين التجربة.",
+            feature2Title: "إدارة الأجهزة المرتبطة",
+            feature2Desc: "يمكنك الآن ربط جهازين بنفس الحساب وإدارتهما بسهولة. يمكنك إزالة جهاز وإضافة آخر دون الحاجة للاتصال بالمطور. تحكم كامل في أجهزتك من داخل التطبيق.",
+            feature3Title: "نظام الترخيص المتقدم والتشفير",
+            feature3Desc: "تم إضافة نظام ترخيص مشفر يحمي بياناتك ويضمن عمل التطبيق بشكل آمن. جميع بيانات المستخدم الآن مشفرة باستخدام تقنيات متقدمة لحماية خصوصيتك ومنع الاستخدام غير المصرح به.",
+            feature4Title: "دعوة الأصدقاء والمكافآت",
+            feature4Desc: "يمكنك الآن دعوة أصدقائك إلى التطبيق واستلام مكافآت حصرية. كل صديق تدعوه يعني نقاط أكثر وعروض إضافية. شارك رمز الدعوة الخاص بك واكسب مزايا إضافية.",
+            feature4Desc2: "نظام الدعوات يكافئك أنت وصديقك!",
+            feature4List1Title: "أنت (الداعي):",
+            feature4List1Desc: "اذهب للقائمة الجانبية واختر \"دعوة صديق\" وأرسل رابط الدعوة الخاص بك. مقابل كل صديق يسجل عبر رابطك، ستحصل على 5 عمليات كمكافئة واعطائك 10 عمليات اضافية لكل 5 اشخاص تم تسجيلهم عبر رابط الدعوة الخاص بك.",
+            feature4List2Title: "المكافئة الكبرى للداعي:",
+            feature4List2Desc: "عند قيام 5 اشخاص من الذين قاموا بالتسجيل بواسطة رابطك بالاشتراك بالنسخة الكاملة سيتم اشتراكك بالنسخة الكاملة مجانا.",
+            feature4List3Title: "صديقك (المدعو):",
+            feature4List3Desc: "عندما يسجل صديقك عبر رابطك، سيحصل هو على 3 عمليات إضافية فوق باقته المجانية كهدية ترحيب.",
+            feature4Desc3: "يمكنك دائماً متابعة رصيد مكافآتك من القائمة الجانبية.",
+            tipTitle: "نصيحة:",
+            tipDesc: "إستفد من دعوات الاصدقاء بمشاركة رابطك في المجموعات والمنتديات لتكسب ميزات أضافية.",
+            feature5Title: "الإشتراك بالتطبيق والترقية",
+            feature5Desc: "تم إضافة خيار شراء التطبيق بالكامل لإزالة القيود والاستمتاع بجميع الميزات بدون حدود. استمتع بتجربة خالية من الإعلانات مع ميزات متقدمة حصرية للمستخدمين المميزين.",
+            feature5NoteTitle: "ملاحظة:",
+            feature5NoteDesc: "تم جعل النسخة الكاملة بمبلغ رمزي وذلك لتغطية الرسوم الشهري لمنصة جوجل لتغطية ميزات التطبيق الإحترافية فلا تتردد بالشراء دعماً للتطبيق",
+            continueBtn: "استمرار إلى التطبيق"
+        },
+        en: {
+            title: "What's New in My Smart Wallet App",
+            subtitle: "Discover the new features we've added to enhance your experience",
+            versionText: "New Features in Version 1.0.5",
+            feature1Title: "Automatic Local Currency Detection",
+            feature1Desc: "A new feature that allows the app to automatically detect your local currency based on your geographical location. No manual settings needed, the appropriate currency will be automatically determined for you to save time and improve the experience.",
+            feature2Title: "Linked Device Management",
+            feature2Desc: "You can now link two devices to the same account and manage them easily. You can remove a device and add another without needing to contact the developer. Full control over your devices from within the app.",
+            feature3Title: "Advanced Licensing and Encryption System",
+            feature3Desc: "An encrypted licensing system has been added to protect your data and ensure the app works securely. All user data is now encrypted using advanced technologies to protect your privacy and prevent unauthorized use.",
+            feature4Title: "Friend Invitations and Rewards",
+            feature4Desc: "You can now invite your friends to the app and receive exclusive rewards. Every friend you invite means more points and additional offers. Share your invitation code and earn extra benefits.",
+            feature4Desc2: "The invitation system rewards both you and your friend!",
+            feature4List1Title: "You (Inviter):",
+            feature4List1Desc: "Go to the side menu and choose \"Invite a Friend\" and send your invitation link. For every friend who registers through your link, you'll get 5 operations as a reward and 10 additional operations for every 5 people registered through your invitation link.",
+            feature4List2Title: "Grand Reward for Inviter:",
+            feature4List2Desc: "When 5 people who registered through your link subscribe to the full version, you will get the full version subscription for free.",
+            feature4List3Title: "Your Friend (Invited):",
+            feature4List3Desc: "When your friend registers through your link, they will get 3 additional operations on top of their free quota as a welcome gift.",
+            feature4Desc3: "You can always track your reward balance from the side menu.",
+            tipTitle: "Tip:",
+            tipDesc: "Take advantage of friend invitations by sharing your link in groups and forums to earn additional features.",
+            feature5Title: "App Subscription and Upgrade",
+            feature5Desc: "The option to purchase the full app has been added to remove restrictions and enjoy all features without limits. Enjoy an ad-free experience with exclusive advanced features for premium users.",
+            feature5NoteTitle: "Note:",
+            feature5NoteDesc: "The full version has been made at a symbolic price to cover the monthly fees of the Google platform for the professional features of the app, so don't hesitate to purchase to support the app",
+            continueBtn: "Continue to App"
+        },
+        es: {
+            title: "Novedades en la aplicación My Smart Wallet",
+            subtitle: "Descubre las nuevas funciones que hemos añadido para mejorar tu experiencia",
+            versionText: "Nuevas funciones en la versión 1.0.5",
+            feature1Title: "Detección automática de moneda local",
+            feature1Desc: "Una nueva función que permite a la aplicación detectar automáticamente tu moneda local según tu ubicación geográfica. No se necesitan ajustes manuales, la moneda apropiada se determinará automáticamente para ahorrar tiempo y mejorar la experiencia.",
+            feature2Title: "Gestión de dispositivos vinculados",
+            feature2Desc: "Ahora puedes vincular dos dispositivos a la misma cuenta y gestionarlos fácilmente. Puedes eliminar un dispositivo y agregar otro sin necesidad de contactar al desarrollador. Control total sobre tus dispositivos desde la aplicación.",
+            feature3Title: "Sistema avanzado de licencias y cifrado",
+            feature3Desc: "Se ha añadido un sistema de licencias cifrado que protege tus datos y garantiza el funcionamiento seguro de la aplicación. Todos los datos del usuario ahora están cifrados utilizando tecnologías avanzadas para proteger tu privacidad y prevenir el uso no autorizado.",
+            feature4Title: "Invitaciones a amigos y recompensas",
+            feature4Desc: "Ahora puedes invitar a tus amigos a la aplicación y recibir recompensas exclusivas. Cada amigo que invites significa más puntos y ofertas adicionales. Comparte tu código de invitación y gana beneficios extra.",
+            feature4Desc2: "¡El sistema de invitaciones recompensa tanto a ti como a tu amigo!",
+            feature4List1Title: "Tú (Invitador):",
+            feature4List1Desc: "Ve al menú lateral y elige \"Invitar a un amigo\" y envía tu enlace de invitación. Por cada amigo que se registre a través de tu enlace, recibirás 5 operaciones como recompensa y 10 operaciones adicionales por cada 5 personas registradas a través de tu enlace de invitación.",
+            feature4List2Title: "Gran recompensa para el invitador:",
+            feature4List2Desc: "Cuando 5 personas que se registraron a través de tu enlace se suscriban a la versión completa, obtendrás la suscripción a la versión completa gratis.",
+            feature4List3Title: "Tu amigo (Invitado):",
+            feature4List3Desc: "Cuando tu amigo se registre a través de tu enlace, recibirá 3 operaciones adicionales además de su cuota gratuita como regalo de bienvenida.",
+            feature4Desc3: "Siempre puedes seguir el saldo de tus recompensas desde el menú lateral.",
+            tipTitle: "Consejo:",
+            tipDesc: "Aprovecha las invitaciones de amigos compartiendo tu enlace en grupos y foros para ganar funciones adicionales.",
+            feature5Title: "Suscripción y actualización de la aplicación",
+            feature5Desc: "Se ha añadido la opción de comprar la aplicación completa para eliminar restricciones y disfrutar de todas las funciones sin límites. Disfruta de una experiencia sin anuncios con funciones avanzadas exclusivas para usuarios premium.",
+            feature5NoteTitle: "Nota:",
+            feature5NoteDesc: "La versión completa se ha establecido a un precio simbólico para cubrir las tarifas mensuales de la plataforma de Google para las funciones profesionales de la aplicación, así que no dudes en comprar para apoyar la aplicación",
+            continueBtn: "Continuar a la aplicación"
+        }
+    };
+
+    // تحديد اللغة الافتراضية بناءً على لغة المتصفح
+    function detectLanguage() {
+        const browserLang = navigator.language || navigator.userLanguage;
+        const supportedLangs = ['ar', 'en', 'es'];
+
+        // إذا كانت اللغة المدعومة هي لغة المتصفح
+        if (supportedLangs.includes(browserLang.split('-')[0])) {
+            return browserLang.split('-')[0];
+        }
+
+        // إذا لم يتم التعرف على اللغة، استخدم العربية
+        return 'ar';
+    }
+
+    // تطبيق اللغة المحددة
+    function applyLanguage(lang) {
+        document.documentElement.lang = lang;
+
+        // تغيير اتجاه الصفحة بناءً على اللغة
+        if (lang === 'ar') {
+            document.documentElement.dir = 'rtl';
+        } else {
+            document.documentElement.dir = 'ltr';
+        }
+
+        // تحديث النصوص
+        document.getElementById('title').textContent = translations[lang].title;
+        document.getElementById('subtitle').textContent = translations[lang].subtitle;
+        document.getElementById('version-text').textContent = translations[lang].versionText;
+        document.getElementById('feature1-title').textContent = translations[lang].feature1Title;
+        document.getElementById('feature1-desc').textContent = translations[lang].feature1Desc;
+        document.getElementById('feature2-title').textContent = translations[lang].feature2Title;
+        document.getElementById('feature2-desc').textContent = translations[lang].feature2Desc;
+        document.getElementById('feature3-title').textContent = translations[lang].feature3Title;
+        document.getElementById('feature3-desc').textContent = translations[lang].feature3Desc;
+        document.getElementById('feature4-title').textContent = translations[lang].feature4Title;
+        document.getElementById('feature4-desc').textContent = translations[lang].feature4Desc;
+        document.getElementById('feature4-desc2').textContent = translations[lang].feature4Desc2;
+        document.getElementById('feature4-list1-title').textContent = translations[lang].feature4List1Title;
+        document.getElementById('feature4-list1-desc').textContent = translations[lang].feature4List1Desc;
+        document.getElementById('feature4-list2-title').textContent = translations[lang].feature4List2Title;
+        document.getElementById('feature4-list2-desc').textContent = translations[lang].feature4List2Desc;
+        document.getElementById('feature4-list3-title').textContent = translations[lang].feature4List3Title;
+        document.getElementById('feature4-list3-desc').textContent = translations[lang].feature4List3Desc;
+        document.getElementById('feature4-desc3').textContent = translations[lang].feature4Desc3;
+        document.getElementById('tip-title').textContent = translations[lang].tipTitle;
+        document.getElementById('tip-desc').textContent = translations[lang].tipDesc;
+        document.getElementById('feature5-title').textContent = translations[lang].feature5Title;
+        document.getElementById('feature5-desc').textContent = translations[lang].feature5Desc;
+        document.getElementById('feature5-note-title').textContent = translations[lang].feature5NoteTitle;
+        document.getElementById('feature5-note-desc').textContent = translations[lang].feature5NoteDesc;
+        document.getElementById('continue-btn').textContent = translations[lang].continueBtn;
+
+        // تحديث حالة أزرار اللغة
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            if (btn.dataset.lang === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // حفظ اللغة المختارة في localStorage
+        localStorage.setItem('selectedLanguage', lang);
+    }
+
+    // تهيئة اللغة عند تحميل الصفحة
+    function initLanguage() {
+        // التحقق إذا كانت هناك لغة محفوظة مسبقاً
+        const savedLang = localStorage.getItem('selectedLanguage');
+
+        if (savedLang) {
+            applyLanguage(savedLang);
+        } else {
+            const detectedLang = detectLanguage();
+            applyLanguage(detectedLang);
+        }
+    }
+
+    // إضافة مستمعي الأحداث لأزرار اللغة
+    document.querySelectorAll('.language-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const lang = button.dataset.lang;
+            applyLanguage(lang);
+        });
+    });
+
+    // تهيئة اللغة عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', initLanguage);
+
+    function setAppIcon(iconData) {
+          const appIcon = document.querySelector('.app-icon');
+          appIcon.innerHTML = ''; // إزالة الأيقونة المؤقتة
+
+          const img = document.createElement('img');
+          img.src = iconData;
+          img.alt = 'تطبيق محفظتي الذكية';
+          appIcon.appendChild(img);
+      }
+
+      function closeDialog() {
+          // إرسال رسالة إلى التطبيق للإغلاق
+          if (window.android && window.android.closeUpdateDialog) {
+              window.android.closeUpdateDialog();
+          } else {
+              // Fallback للاختبار في المتصفح
+              alert("يمكنك الآن استكشاف الميزات الجديدة!");
+          }
+      }
+
+      // جعل الدالة متاحة globally للزر في HTML
+      window.closeDialog = closeDialog;
+
+      // تأثيرات عند التمرير
+      document.addEventListener('DOMContentLoaded', function() {
+          const features = document.querySelectorAll('.feature');
+
+          features.forEach((feature, index) => {
+              feature.style.animationDelay = `${index * 0.2}s`;
+          });
+
+          // تأثير نبض لرقم الإصدار
+          const versionBadge = document.querySelector('.version-badge');
+          setInterval(() => {
+              versionBadge.style.animation = 'none';
+              setTimeout(() => {
+                  versionBadge.style.animation = 'pulse 2s infinite';
+              }, 10);
+          }, 4000);
+      });
+       // إضافة دالة التكبير والتصغير بالإيماءات
+          document.addEventListener('DOMContentLoaded', function() {
+              let initialDistance = null;
+              let currentScale = 1;
+              const content = document.body;
+
+              content.addEventListener('touchstart', function(e) {
+                  if (e.touches.length === 2) {
+                      e.preventDefault();
+                      initialDistance = Math.hypot(
+                          e.touches[1].clientX - e.touches[0].clientX,
+                          e.touches[1].clientY - e.touches[0].clientY
+                      );
+                  }
+              });
+
+              content.addEventListener('touchmove', function(e) {
+                  if (e.touches.length === 2 && initialDistance !== null) {
+                      e.preventDefault();
+                      const currentDistance = Math.hypot(
+                          e.touches[1].clientX - e.touches[0].clientX,
+                          e.touches[1].clientY - e.touches[0].clientY
+                      );
+
+                      if (initialDistance > 0) {
+                          const scale = currentDistance / initialDistance;
+                          const newScale = Math.max(0.8, Math.min(scale * currentScale, 2));
+                          content.style.transform = `scale(${newScale})`;
+                          content.style.transformOrigin = 'center center';
+                      }
+                  }
+              });
+
+              content.addEventListener('touchend', function() {
+                  if (initialDistance !== null) {
+                      const computedStyle = window.getComputedStyle(content);
+                      const matrix = new DOMMatrixReadOnly(computedStyle.transform);
+                      currentScale = matrix.a;
+
+                      initialDistance = null;
+                  }
+              });
+          });
+</script>
+</body>
+</html>

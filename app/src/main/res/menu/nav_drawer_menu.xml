@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item
+        android:id="@+id/nav_admin_dashboard"
+        android:icon="@drawable/ic_admin_panel"
+        android:title="لوحة تحكم المدير"
+        android:visible="false" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_login"
+            android:tint="@color/login_color"
+            android:title="@string/menu_login" />
+        <item
+            android:id="@+id/nav_new_bill"
+            android:tint="?attr/colorControlNormal"
+            android:icon="@drawable/ic_invoice"
+            android:title="@string/menu_new_bill" />
+        <item
+            android:id="@+id/nav_test"
+            android:tint="?attr/colorControlNormal"
+            android:icon="@drawable/ic_invoice"
+           android:visible="false"
+            android:title="فحص" />
+
+        <item
+            android:id="@+id/nav_reports"
+            android:icon="@drawable/ic_reports"
+            android:title="@string/menu_reports" />
+    </group>
+
+    <item android:title="@string/menu_settings">
+        <menu>
+            <item
+                android:id="@+id/nav_change_language"
+                android:title="@string/change_language"
+                android:icon="@drawable/ic_language" />
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_person"
+                android:title="@string/menu_profile" />
+            <item
+                android:id="@+id/nav_currencies"
+                android:icon="@drawable/ic_currency"
+                android:title="@string/menu_currencies" />
+            <item
+                android:id="@+id/nav_account_types"
+                android:icon="@drawable/ic_accounts_types"
+                android:title="@string/menu_account_types" />
+            <item
+                android:id="@+id/nav_daily_notification"
+                android:title="@string/action_notifications"
+                android:icon="@drawable/ic_notifications"
+                android:visible="false"
+                app:actionLayout="@layout/menu_switch_item" />
+        </menu>
+    </item>
+
+    <item android:title="@string/menu_settings_securety">
+        <menu>
+            <item
+                android:id="@+id/nav_password_lock"
+                android:title="@string/menu_password_lock"
+                app:actionLayout="@layout/menu_switch_item" />
+            <item
+                android:id="@+id/nav_biometric_lock"
+                android:title="@string/menu_biometric_lock"
+                app:actionLayout="@layout/menu_switch_item" />
+
+        </menu>
+    </item>
+
+    <item android:title="@string/action_notifications">
+        <menu>
+
+            <item
+                android:id="@+id/nav_general_notifications"
+                android:title="@string/channel_general_name"
+                app:actionLayout="@layout/menu_switch_item" />
+            <item
+                android:id="@+id/nav_daily_reminders"
+                android:title="@string/channel_daily_name"
+                app:actionLayout="@layout/menu_switch_item" />
+
+        </menu>
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_manage_devices"
+                android:icon="@drawable/ic_smartphone"
+                android:title="@string/manage_devices" />
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:visible="false"
+                android:title="@string/menu_logout" />
+            <item
+                android:id="@+id/nav_purchase_app"
+                android:icon="@drawable/ic_shopping_cart"
+                android:title="@string/menu_purchase_app" />
+            <item
+                android:id="@+id/nav_watch_ad"
+                android:icon="@drawable/ic_play_circle"
+                android:visible="false"
+                android:title="@string/menu_watch_ad" />
+            <item
+                android:id="@+id/nav_invite_friend"
+                android:icon="@drawable/ic_invite_friend"
+                android:title="@string/menu_invite_friend" />
+        </menu>
+    </item>
+    <item android:title="@string/menu_help_support">
+        <menu>
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help"
+                android:title="@string/menu_help" />
+            <item
+                android:id="@+id/nav_contact_support"
+                android:icon="@drawable/ic_contact_support"
+                android:title="@string/menu_contact_support" />
+            <item
+                android:id="@+id/nav_backup_data"
+                android:icon="@drawable/ic_backup"
+                android:title="نسخ احتياطي للبيانات" />
+            <item
+                android:id="@+id/nav_restore_data"
+                android:icon="@drawable/ic_restore"
+                android:title="@string/menu_restore_data" />
+            <item
+                android:id="@+id/nav_update_data"
+                android:icon="@drawable/ic_update"
+                android:visible="false"
+                android:title="تحديث FireStore" />
+        </menu>
+    </item>
+
+    <item android:title="@string/menu_privacy_policy_update">
+        <menu>
+            <item
+                android:id="@+id/nav_terms_cond"
+                android:icon="@drawable/ic_terms"
+                android:title="@string/terms_cond" />
+            <item
+                android:id="@+id/nav_privacy_policy"
+                android:icon="@drawable/ic_privacy"
+                android:title="@string/menu_privacy_policy" />
+            <item
+                android:id="@+id/nav_rate_app"
+                android:icon="@drawable/ic_rate"
+                android:title="@string/menu_rate_app" />
+            <item
+                android:id="@+id/nav_update_app"
+                android:icon="@drawable/ic_update"
+                android:title="@string/menu_update_app" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_exit"
+                android:title="@string/menu_exit" />
+        </menu>
+    </item>
+</menu>

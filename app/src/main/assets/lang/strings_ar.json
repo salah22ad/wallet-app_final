@@ -1,0 +1,23 @@
+{
+  "server_running": "الخادم يعمل",
+  "server_stopped": "الخادم متوقف",
+  "start_server": "بدء الخادم",
+  "stop_server": "إيقاف الخادم",
+  "account_name": "اسم الحساب",
+  "currency": "العملة",
+  "balance_type": "نوع الرصيد",
+  "balance": "الرصيد",
+  "no_accounts": "لا توجد حسابات ذات رصيد لهذا النوع.",
+  "totals_in_currency": "الإجماليات بعملة: ",
+  "month": "الشهر",
+  "total_credit": "إجمالي لكم",
+  "total_debit": "إجمالي عليكم",
+  "net_change": "صافي الحركة",
+  "transactions_in_currency": "الحركات بعملة: ",
+  "date": "التاريخ",
+  "details": "التفاصيل",
+  "debit": "عليكم",
+  "credit": "لكم",
+  "balance_type_debit": "عليه",
+  "balance_type_credit": "له"
+}

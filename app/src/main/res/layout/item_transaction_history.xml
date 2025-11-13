@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="0dp"
+    android:paddingHorizontal="8dp"
+    android:baselineAligned="false"
+    android:gravity="center_vertical">
+
+    <!-- العمود 1: التاريخ والوقت -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
+            tools:text="28-10-2019" />
+
+        <TextView
+            android:id="@+id/timeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="22:04" />
+    </LinearLayout>
+    <!--    <View-->
+    <!--        android:layout_width="1dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="?attr/colorOutline"/>-->
+    <!-- العمود 2: المبلغ -->
+    <TextView
+        android:id="@+id/amountTextView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textStyle="bold"
+        android:textSize="13dp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        tools:text="1,176,500" />
+    <!--<View-->
+    <!--    android:layout_width="1dp"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:background="?attr/colorOutline"/>-->
+    <!-- العمود 3: التفاصيل -->
+    <TextView
+        android:id="@+id/detailsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:textSize="12dp"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurface"
+        tools:text="تفاصيل العملية هنا يمكن أن تكون طويلة جداً وتأخذ أكثر من سطر واحد" />
+
+    <!--    <View-->
+    <!--        android:layout_width="1dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="?attr/colorOutline"/>-->
+    <!-- العمود 4: أيقونة السهم -->
+    <ImageView
+        android:id="@+id/arrowImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginHorizontal="4dp"
+        tools:src="@drawable/ic_arrow_down_red" />
+    <!--    <View-->
+    <!--        android:layout_width="1dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:background="?attr/colorOutline"/>-->
+    <!-- العمود 5: الرصيد -->
+    <TextView
+        android:id="@+id/balanceTextView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        tools:text="14,090,925" />
+
+    <ImageView
+        android:id="@+id/arrowEditView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:padding="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_edit"
+        android:contentDescription="@string/edit"
+        android:visibility="gone"
+        app:tint="?attr/colorOnSurfaceVariant"
+        tools:visibility="visible" />
+
+</LinearLayout>
